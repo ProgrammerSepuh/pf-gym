@@ -440,7 +440,7 @@
         <h1>BE STRONG</h1>
         <p class="judul-subtext">READY TO TRAIN YOUR BODY</p>
         
-        <a href="<?php echo base_url("/auth")?>">
+        <a href="<?php echo base_url("login")?>">
             <button class="join-button">LET'S JOIN US</button>
         </a>
         
