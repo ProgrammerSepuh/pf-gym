@@ -10,25 +10,32 @@ class dashboard extends BaseController
 
     public function __Construct(){
 
-        // $this->session = \Config\Services::session();
+        $this->session = \Config\Services::session();
         $this->memberModel = new memberModel;
     }
 
     public function index()
     {
-        // $idUser = $this->session->get('id_user');
-        // $username = $this->session->get('username');
+        $idUser = $this->session->get('id_user');
+        $username = $this->session->get('username');
 
+        $date = date('m');
+
+        $memberBaru = $this->memberModel->select('*')->where('MONTH(tanggal)', $date)->countAllResults();
         $totalmember = $this->memberModel->countAll();
         $totalAktif = $this->memberModel->where('status', 'tidak')->countAllResults();
         $totalNoAktif = $this->memberModel->where('status', 'aktif')->countAllResults();
+
+        $member = $this->memberModel->joinmembership();
+
         $data = [
             'totalMember' => $totalmember,
             'aktif' =>$totalAktif,
             'tidak' =>$totalNoAktif,
-            // 'member' => $username,
+            'baru' =>$memberBaru,
+            'username' => $username,
+            'member' => $member
         ];
-        // dd($totalmember);
         echo view('dashboard_admin', $data);
     }
 }

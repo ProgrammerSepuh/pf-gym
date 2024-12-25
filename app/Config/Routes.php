@@ -10,4 +10,4 @@ $routes->get('/auth', 'Home::login');
 $routes->post('/auth', 'Home::loginProses');
 
 // dashboard
-$routes->get('/admin', 'dashboard');
+$routes->get('/dashboard', 'dashboard');

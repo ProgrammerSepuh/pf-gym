@@ -10,7 +10,7 @@ class Home extends BaseController
 
     public function __Construct(){
 
-        // $this->session = \Config\Services::session();
+        $this->session = \Config\Services::session();
         $this->memberModel = new memberModel;
     }
 
@@ -25,38 +25,38 @@ class Home extends BaseController
         echo view('login');
     }
 
-    public function loginProses()
-    {
+    public function loginProses(){
         $session = session();
         $usernameOrEmail = $this->request->getPost('usernameOrEmail');
         $password = $this->request->getPost('password');
-    
-        // Mencari pengguna berdasarkan nama_member atau email
-        $user = $this->memberModel->where(['nama_member' => $usernameOrEmail])
-                                  ->orWhere(['email' => $usernameOrEmail])
-                                  ->first();
-    
-        // Jika pengguna tidak ditemukan
-        if (!$user) {
-            session()->setFlashData('pesan', 'Username atau email Anda salah');
-            return redirect()->to('/auth'); 
+
+        $usernameOrEmail = $this->memberModel->where(['nama_member' => $usernameOrEmail])->orWhere(['email' => $usernameOrEmail ])->first();
+
+        if(!$usernameOrEmail){
+            session()->setFlashData('pesan', 'username atau email anda salah');
+            return redirect()->to('auth');
+        };
+
+        if($usernameOrEmail['password'] != $password ){
+            session()->setFlashData('pesan', 'password anda salah');
+            return redirect()->to('auth');
         }
-    
-        // Verifikasi password
-        if ($user['password'] !== $password) {
-            session()->setFlashData('pesan', 'Password Anda salah');
-            return redirect()->to('/auth'); 
-        }
-    
-        // Jika valid, set data sesi dan arahkan ke dashboard admin
+
+        $idMember = $usernameOrEmail['id_member'];
+        $username = $usernameOrEmail['nama_member'];
+
         $data = [
-            'id_user' => $user['id_member'],
-            'username' => $user['nama_member'],
+            'id_user' => $idMember,
+            'username' => $username,
             'isLoggedIn' => true
         ];
-        $session->set($data);
-    
-        return redirect()->to('admin');
+
+        $session->set([
+            'id_user' => $idMember,
+            'username' => $username,
+            'isLoggedIn' => true
+        ]);
+        return redirect()->to('dashboard');
+
     }
-    
 }

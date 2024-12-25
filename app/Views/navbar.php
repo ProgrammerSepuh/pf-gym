@@ -87,6 +87,6 @@
     </div>
 
     <div class="logo">
-        <a href="<?php echo base_url("/auth")?>">BERGABUNG!</a>
+        <a href="login">BERGABUNG!</a>
     </div>
 </nav>

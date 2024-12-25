@@ -288,12 +288,12 @@
             text-align: center;
         }
 
-        .status-active {
+        .aktif {
             background-color: #28a745;
             color: white;
         }
 
-        .status-inactive {
+        .tidak {
             background-color: #dc3545;
             color: white;
         }
@@ -308,7 +308,7 @@
         </div>
         <!-- Link Navigation Buttonx -->
         <a href="<?php echo base_url("profile")?>" class="user-button">
-
+            <span class="username"><?= $username ?></span>
             <div class="profile-icon"><i class="fas fa-user"></i></div>
         </a>
     </div>
@@ -345,7 +345,7 @@
             <div class="dashboard-stats">
                 <div class="dashboard-card">
                     <h4>Member Baru</h4>
-                    <div class="number">10</div>
+                    <div class="number"><?= $baru ?></div>
                 </div>
                 <div class="dashboard-card">
                     <h4>Member Aktif</h4>
@@ -378,36 +378,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>MB001</td>
-                            <td>John Doe</td>
-                            <td>Laki-laki</td>
-                            <td>Islam</td>
-                            <td>081234567890</td>
-                            <td>2024-12-31</td>
-                            <td><span class="status-badge status-active">Active</span></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>MB002</td>
-                            <td>Jane Smith</td>
-                            <td>Perempuan</td>
-                            <td>Kristen</td>
-                            <td>087654321098</td>
-                            <td>2024-06-30</td>
-                            <td><span class="status-badge status-inactive">Active</span></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>MB003</td>
-                            <td>Michael Johnson</td>
-                            <td>Laki-laki</td>
-                            <td>Katholik</td>
-                            <td>085678901234</td>
-                            <td>2024-09-15</td>
-                            <td><span class="status-badge status-active">Active</span></td>
-                        </tr>
+                        <?php $i = 1;?>
+                        <?php foreach($member as $m):?>
+                            <tr>
+                                <td><?= $i ?></td>
+                                <td><?= $m['id_member']?></td>
+                                <td><?= $m['nama_member']?></td>
+                                <td><?= $m['jenis_kelamin']?></td>
+                                <td><?= $m['agama']?></td>
+                                <td><?= $m['nomor_hp']?></td>
+                                <td><?= $m['tanggal_akhir']?></td>
+                                <td><span class="status-badge <?= $m['status']?>"><?= $m['status']?></span></td>
+                            </tr>
+                            <?php  $i++ ?>
+                        <?php endforeach ?>
                     </tbody>
                 </table>
             </div>
@@ -445,3 +429,5 @@
     </script>
 </body>
 </html>
+
+
