@@ -31,4 +31,11 @@ class dashboard extends BaseController
         // dd($totalmember);
         echo view('dashboard_admin', $data);
     }
+
+    public function profile(){
+        echo view('profile');
+    }
+
 }
+
+

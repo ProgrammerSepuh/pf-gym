@@ -180,6 +180,8 @@
                 display: none; 
             }
         }
+
+        
     </style>
 </head>
 <body>
@@ -195,9 +197,6 @@
 
         <!-- Bagian Kanan -->
         <div class="login-right">
-
-        <!-- Fungsi Session Login -->
-
 
             <!-- Form Login -->
             <form action="<?php base_url('loginProses')?>" method="POST">
@@ -218,9 +217,7 @@
                 </div>
                 <button class="login-button">Login</button>
             </form>
-            
         </div>
     </div>
-    
 </body>
 </html>

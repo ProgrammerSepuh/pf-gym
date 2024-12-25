@@ -186,7 +186,9 @@
 
         .content .profile-box {
             background-color: white;
-            padding: 20px;
+            padding: 50px;
+            padding-left: 150px;
+            padding-right: 150px;
             border-radius: 10px;
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
         }
@@ -256,7 +258,64 @@
             font-family: 'Poppins', sans-serif;
             font-weight: 400;
             font-size: 1.5em;
-            margin-bottom: 20px; /* Jarak bawah untuk div */
+            margin-bottom: 20px;
+        }
+
+        .sidebar .menu-item.active {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        .sidebar .menu-item.active .icon-box {
+            background-color: white;
+            color: #007BFF;
+        }
+
+        /* Container untuk status */
+        .status-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        /* Box untuk masing-masing status */
+        .status-box {
+            flex: 1;
+            background-color: white;
+            padding: 30px;
+            margin: 0 15px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Judul status */
+        .status-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+            font-weight: 500;
+            color: gray;
+            margin-bottom: 20px;
+        }
+
+        /* Box untuk status active */
+        .status-active-box {
+            background-color: #44DF5B;
+            color: white;
+            padding: 15px;
+            font-size: 2em;
+            font-family: 'Bebas Neue', sans-serif;
+            text-align: center;
+            width: 200px;
+            margin: 0 auto; 
+            font-weight: 600;
+        }
+
+        /* Days left styling */
+        .status-days {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 3em;
+            color: #44DF5B;
+            text-align: center;
+            font-weight: 600;
         }
 
     </style>
@@ -268,28 +327,20 @@
         <div class="search-box">
             <input type="text" placeholder="Search">
         </div>
-        <a href="/profile" class="user-button">
+        <div class="user-button">
             <span class="username">Donny Abraham</span>
             <div class="profile-icon"><i class="fas fa-user"></i></div>
-        </a>
+        </div>
     </div>
 
     <!-- Sidebar -->
     <div class="sidebar">
         <div>
             <div class="menu-title">Menu</div>
-            <a href="<?php echo base_url('admin'); ?>" class="menu-item">
-                <div class="icon-box"><i class="fas fa-chart-line"></i></div> 
-                Dashboard
-            </a>
-            <a href="<?php echo base_url('admin#data-member'); ?>" class="menu-item">
-                <div class="icon-box"><i class="fas fa-user"></i></div>
-                Data Member
-            </a>
-            <a href="<?php echo base_url('admin#manage-membership'); ?>" class="menu-item">
-                <div class="icon-box"><i class="fas fa-file-alt"></i></div> 
-                Manage Membership
-            </a>
+            <a href="<?php echo base_url('/member'); ?>" class="menu-item active">
+            <div class="icon-box"><i class="fas fa-chart-line"></i></div> 
+            Dashboard
+        </a>
         </div>
         <button class="logout-button">
             <div class="icon-circle"><i class="fas fa-arrow-left"></i></div>
@@ -301,6 +352,7 @@
     <div class="content">
         <h1>Welcome, Donny Abraham</h1>
         <div class="profile-box">
+            
             <div class="profile-header">
                 <div class="profile-details">
                     <div class="profile-photo">
@@ -310,10 +362,45 @@
                         <div class="username">Donny Abraham</div>
                         <div class="email">donny@example.com</div>
                     </div>
-                    <a href="<?php echo base_url('admin/edit-profile'); ?>" class="edit-btn">Edit</a>
+                    <a href="<?php echo base_url('#'); ?>" class="edit-btn">Edit</a>
+                </div>
+            </div>
+            
+            <div class="profile-forms">
+                <div style="display: flex; gap: 20px;">
+                    <div style="flex: 1;">
+                        <label for="full-name" style="display: block; margin-bottom: 5px;">Full Name</label>
+                        <input type="text" id="full-name" placeholder="Enter your full name" style="width: 100%; padding: 10px; border: none; border-radius: 5px; background-color: #e0e0e0; outline: none;">
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="email" style="display: block; margin-bottom: 5px;">Email</label>
+                        <input type="email" id="email" placeholder="Enter your email" style="width: 100%; padding: 10px; border: none; border-radius: 5px; background-color: #e0e0e0; outline: none;">
+                    </div>
+                </div>
+                <div style="display: flex; gap: 20px; margin-top: 15px;">
+                    <div style="flex: 1;">
+                        <label for="phone-number" style="display: block; margin-bottom: 5px;">Phone Number</label>
+                        <input type="text" id="phone-number" placeholder="Enter your phone number" style="width: 100%; padding: 10px; border: none; border-radius: 5px; background-color: #e0e0e0; outline: none;">
+                    </div>
+                    <div style="flex: 1;">
+                        <label for="password" style="display: block; margin-bottom: 5px;">Password</label>
+                        <input type="password" id="password" placeholder="Enter your password" style="width: 100%; padding: 10px; border: none; border-radius: 5px; background-color: #e0e0e0; outline: none;">
+                    </div>
                 </div>
             </div>
         </div>
+
+        <div class="status-container">
+            <div class="status-box">
+                <div class="status-title">Member Status</div>
+                <div class="status-active-box">Active</div>
+            </div>
+            <div class="status-box">
+                <div class="status-title">Day Left:</div>
+                <div id="sisaHari" class="status-days">31 Days</div>
+            </div>
+        </div>
+
     </div>
 </body>
 </html>
