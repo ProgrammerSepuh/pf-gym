@@ -44,24 +44,6 @@
             color: black;
         }
 
-        .navbar .search-box {
-            width: 600px;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .navbar .search-box input {
-            width: 100%;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            background-color: white;
-            font-size: 1em;
-            outline: none;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
         .navbar .user-box {
             display: flex;
             align-items: center;
@@ -170,6 +152,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            text-decoration: none;
         }
 
         .logout-button:hover {
@@ -298,7 +281,6 @@
 
         /* Box untuk status active */
         .status-active-box {
-            background-color: #44DF5B;
             color: white;
             padding: 15px;
             font-size: 2em;
@@ -306,7 +288,7 @@
             text-align: center;
             width: 200px;
             margin: 0 auto; 
-            font-weight: 600;
+            font-weight: 400;
         }
 
         /* Days left styling */
@@ -315,42 +297,133 @@
             font-size: 3em;
             color: #44DF5B;
             text-align: center;
-            font-weight: 600;
+            font-weight: 4v00;
         }
+
+        .status-green {
+            background-color: #00FF00;
+        }
+
+        .status-red {
+            background-color: #FF0000;
+        }
+
+        /* Edit Button */
+    .edit-btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    /* Modal (Hidden by default) */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0,0,0,0.4);
+        padding-top: 60px;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        background-color: white;
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 5px;
+    }
+
+    /* Close Button */
+    .close-btn {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close-btn:hover,
+    .close-btn:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    /* Form Inputs */
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+    }
+
+    .submit-btn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .submit-btn:hover {
+        background-color: #45a049;
+    }
 
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <div class="navbar">
-        <div class="brand-title">PF <span style="color: red;">GYM</span> & FITNESS</div>
-        <div class="search-box">
-            <input type="text" placeholder="Search">
-        </div>
-        <div class="user-button">
-            <span class="username">Donny Abraham</span>
-            <div class="profile-icon"><i class="fas fa-user"></i></div>
-        </div>
+    <div class="brand-title">
+        <a href="<?= base_url('/'); ?>" style="text-decoration: none; color: inherit;">
+            PF <span style="color: red;">GYM</span> & FITNESS
+        </a>
+    </div>
+
+
+    <!-- Menampilkan data member yang login -->
+    <div class="user-button">
+        <span class="username"><?= esc($member['nama_member']); ?></span>
+        <div class="profile-icon"><i class="fas fa-user"></i></div>
+    </div>
+        
     </div>
 
     <!-- Sidebar -->
     <div class="sidebar">
         <div>
             <div class="menu-title">Menu</div>
-            <a href="<?php echo base_url('/member'); ?>" class="menu-item active">
-            <div class="icon-box"><i class="fas fa-chart-line"></i></div> 
-            Dashboard
-        </a>
+            <a href="<?= base_url('/member'); ?>" class="menu-item active">
+                <div class="icon-box"><i class="fas fa-chart-line"></i></div> 
+                Dashboard
+            </a>
         </div>
-        <button class="logout-button">
+        <a href="<?= base_url('/logout'); ?>" class="logout-button">
             <div class="icon-circle"><i class="fas fa-arrow-left"></i></div>
             Logout
-        </button>
+        </a>
     </div>
+
 
     <!-- Main Content -->
     <div class="content">
-        <h1>Welcome, Donny Abraham</h1>
+        <!-- Menampilkan pesan selamat datang dengan nama member -->
+        <h1>Welcome, <?= esc($member['nama_member']); ?></h1>
         <div class="profile-box">
             
             <div class="profile-header">
@@ -359,10 +432,35 @@
                         <i class="fas fa-user"></i>
                     </div>
                     <div>
-                        <div class="username">Donny Abraham</div>
-                        <div class="email">donny@example.com</div>
+                        <div class="username"><?= esc($member['nama_member']); ?></div>
+                        <div class="email"><?= esc($member['email']); ?></div>
                     </div>
-                    <a href="<?php echo base_url('#'); ?>" class="edit-btn">Edit</a>
+
+                    <!-- Edit Button -->
+                    <a class="edit-btn" id="openEditModal">Edit</a>
+
+                    <!-- Modal Popup -->
+                    <div id="editModal" class="modal">
+                        <div class="modal-content">
+                            <span class="close-btn" id="closeEditModal">&times;</span>
+                            <h3>Edit Profile</h3>
+                            <form action="<?= base_url('memberDashboard/updateProfile'); ?>" method="POST">
+                                <label for="full-name">Full Name</label>
+                                <input type="text" id="full-name" name="full_name" value="<?= esc($member['nama_member']); ?>" required>
+
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" value="<?= esc($member['email']); ?>" required>
+
+                                <label for="phone-number">Phone Number</label>
+                                <input type="text" id="phone-number" name="phone_number" value="<?= esc($member['nomor_hp']); ?>" required>
+
+                                <label for="password">Password</label>
+                                <input type="password" id="password" name="password" value="<?= esc($member['password']); ?>" required>
+
+                                <button type="submit" class="submit-btn">Update</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
             
@@ -370,37 +468,89 @@
                 <div style="display: flex; gap: 20px;">
                     <div style="flex: 1;">
                         <label for="full-name" style="display: block; margin-bottom: 5px;">Full Name</label>
-                        <input type="text" id="full-name" placeholder="Enter your full name" style="width: 100%; padding: 10px; border: none; border-radius: 5px; background-color: #e0e0e0; outline: none;">
+                        <div id="full-name" style="width: 100%; padding: 10px; background-color: #e0e0e0; border-radius: 5px;">
+                            <?= esc($member['nama_member']); ?>
+                        </div>
                     </div>
                     <div style="flex: 1;">
                         <label for="email" style="display: block; margin-bottom: 5px;">Email</label>
-                        <input type="email" id="email" placeholder="Enter your email" style="width: 100%; padding: 10px; border: none; border-radius: 5px; background-color: #e0e0e0; outline: none;">
+                        <div id="email" style="width: 100%; padding: 10px; background-color: #e0e0e0; border-radius: 5px;">
+                            <?= esc($member['email']); ?>
+                        </div>
                     </div>
                 </div>
                 <div style="display: flex; gap: 20px; margin-top: 15px;">
                     <div style="flex: 1;">
-                        <label for="phone-number" style="display: block; margin-bottom: 5px;">Phone Number</label>
-                        <input type="text" id="phone-number" placeholder="Enter your phone number" style="width: 100%; padding: 10px; border: none; border-radius: 5px; background-color: #e0e0e0; outline: none;">
+                        <label for="nomor_hp" style="display: block; margin-bottom: 5px;">Phone Number</label>
+                        <div id="nomor_hp" style="width: 100%; padding: 10px; background-color: #e0e0e0; border-radius: 5px;">
+                            <?= esc($member['nomor_hp']); ?>
+                        </div>
                     </div>
                     <div style="flex: 1;">
                         <label for="password" style="display: block; margin-bottom: 5px;">Password</label>
-                        <input type="password" id="password" placeholder="Enter your password" style="width: 100%; padding: 10px; border: none; border-radius: 5px; background-color: #e0e0e0; outline: none;">
+                        <div id="password" style="width: 100%; padding: 10px; background-color: #e0e0e0; border-radius: 5px;">
+                            ********
+                        </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
         <div class="status-container">
             <div class="status-box">
                 <div class="status-title">Member Status</div>
-                <div class="status-active-box">Active</div>
+                <div class="status-active-box <?= ($member['status'] === 'Active') ? 'status-green' : 'status-red '; ?>">
+                    <?= esc($member['status']); ?>
+                </div>
             </div>
+
+
+            <!-- Menampilkan sisa hari menggunakan fungsi PHP -->
+            <?php
+            $sisaHari = 0;
+            if (!empty($member['tanggal_akhir'])) {
+                $tanggalAkhir = new DateTime($member['tanggal_akhir']);
+                $today = new DateTime();
+                $interval = $today->diff($tanggalAkhir);
+                $sisaHari = $interval->days;
+            }
+            ?>
             <div class="status-box">
                 <div class="status-title">Day Left:</div>
-                <div id="sisaHari" class="status-days">31 Days</div>
+                <div id="sisaHari" class="status-days"
+                    style="color: 
+                        <?= ($member['sisa_hari'] == 0) ? '#FF0000' : 
+                            (($member['sisa_hari'] >= 1 && $member['sisa_hari'] <= 5) ? '#FFFF00' : '#00FF00'); ?>;">
+                    <?= esc($member['sisa_hari']); ?> Days
+                </div>
             </div>
         </div>
-
     </div>
 </body>
+
 </html>
+
+<script>
+    // Get modal and buttons
+    var modal = document.getElementById('editModal');
+    var openBtn = document.getElementById('openEditModal');
+    var closeBtn = document.getElementById('closeEditModal');
+
+    // Open modal when Edit button is clicked
+    openBtn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // Close modal when X button is clicked
+    closeBtn.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // Close modal if clicked outside of the modal content
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>

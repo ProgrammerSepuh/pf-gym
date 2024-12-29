@@ -9,8 +9,8 @@ class Home extends BaseController
     protected $memberModel;
 
     public function __Construct(){
-
-        $this->session = \Config\Services::session();
+        
+        // $this->session = \Config\Services::session();
         $this->memberModel = new memberModel;
     }
 
@@ -56,7 +56,7 @@ class Home extends BaseController
             'username' => $username,
             'isLoggedIn' => true
         ]);
-        return redirect()->to('dashboard');
+        return redirect()->to('member');
 
     }
 }

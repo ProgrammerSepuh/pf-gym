@@ -44,24 +44,6 @@
             color: black;
         }
 
-        .navbar .search-box {
-            width: 600px;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .navbar .search-box input {
-            width: 100%;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-            background-color: white;
-            font-size: 1em;
-            outline: none;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
         .navbar .user-box {
             display: flex;
             align-items: center;
@@ -199,6 +181,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            border:none;
         }
 
         .logout-button:hover {
@@ -297,18 +280,68 @@
             background-color: #dc3545;
             color: white;
         }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+            width: 100px;
+            text-align: center;
+        }
+        
+        .status-badge.active {
+            background-color: #28a745; /* Green for active */
+            color: white;
+        }
+        
+        .status-badge.inactive {
+            background-color: #dc3545; /* Red for inactive */
+            color: white;
+        }
+        
+        /* Alert Styles */
+        .alert {
+            position: relative;
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 4px;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .alert.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <div class="navbar">
         <div class="brand-title">PF <span style="color: red;">GYM</span> & FITNESS</div>
-        <div class="search-box">
-            <input type="text" placeholder="Search">
-        </div>
         <!-- Link Navigation Buttonx -->
         <a href="<?php echo base_url("profile")?>" class="user-button">
-            <span class="username"><?= $username ?></span>
+            <span class="username">ADMIN</span>
             <div class="profile-icon"><i class="fas fa-user"></i></div>
         </a>
     </div>
@@ -329,6 +362,15 @@
                 <div class="icon-box"><i class="fas fa-file-alt"></i></div> 
                 Manage Membership
             </a>
+            <a href="#attendance-member" class="menu-item" onclick="showContent('attendance-member')">
+                <div class="icon-box"><i class="fas fa-calendar-check"></i></div>
+                Attendance Member
+            </a>
+            <!-- Menambahkan Menu Report Member -->
+            <a href="#report-member" class="menu-item" onclick="showContent('report-member')">
+                <div class="icon-box"><i class="fas fa-chart-pie"></i></div> 
+                Report Member
+            </a>
         </div>
         <button class="logout-button">
             <div class="icon-circle"><i class="fas fa-arrow-left"></i></div>
@@ -338,6 +380,19 @@
 
     <!-- Main Content -->
     <div class="content">
+        <!-- Fungsi Alert -->
+        <?php if (session()->has('error')): ?>
+            <div class="alert error" style="background-color: #f8d7da; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
+                <?= session()->getFlashdata('error') ?>
+            </div>
+        <?php endif; ?>
+        <?php if (session()->has('success')): ?>
+            <div class="alert success" style="background-color: #d4edda; color: #155724; padding: 12px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
+                <?= session()->getFlashdata('success') ?>
+            </div>
+        <?php endif; ?>
+
+        <!-- BAGIAN ZAXXI -->
         <div id="dashboard" class="menu-content active">
             <h1 style="font-family: 'Poppins', sans-serif; font-weight: 300; font-size: 1.5em; color: black;">Dashboard</h1>
             <h3 style="font-family: 'Poppins', sans-serif; font-weight: 100; font-size: 1em; color: black;">Laporan Bulanan</h3>
@@ -394,15 +449,109 @@
                         <?php endforeach ?>
                     </tbody>
                 </table>
+                <?= $pager->links('member', 'default_pager') ?>
             </div>
         </div>
+        
+        <!-- OTW ABANGKUHH -->
         <div id="data-member" class="menu-content">
             <h2>Data Member</h2>
         </div>
+        
+        <!-- BAGIAN ZAXXI -->
         <div id="manage-membership" class="menu-content">
             <h2>Manage Membership</h2>
         </div>
-    </div>
+        
+        <!-- HALAMAN ATTANDANCE -->
+        <div id="attendance-member" class="menu-content">
+            
+            <!-- JUDUL -->
+            <h2 style="font-family: 'Poppins', sans-serif; font-weight: 300; font-size: 1.5em; color: black;">Attendance Member</h2>
+
+            <!-- Search Box -->
+            <div style="margin-bottom: 20px; text-align: center;">
+                <form method="get" action="<?= base_url('dashboard') ?>" style="display: inline;">
+                    <input type="text" name="search" id="search-bar" placeholder="Cari berdasarkan nama, email, atau nomor HP"
+                        value="<?= esc($search) ?>" 
+                        style="width: 80%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 1em; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);">
+                    <button type="submit"
+                        style="padding: 10px 20px; background-color: #007BFF; color: white; border: none; border-radius: 5px; font-size: 1em; cursor: pointer;">
+                        Cari
+                    </button>
+                </form>
+            </div>
+
+           <!-- Tabel Informasi Member -->
+            <div class="member-info-section">
+                <h3 style="font-family: 'Poppins', sans-serif; font-weight: 100; font-size: 1em; color: black;">Daftar Kehadiran Member</h3>
+
+                <table class="member-info-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Username</th>
+                            <th>Phone Number</th>
+                            <th>Agama</th>
+                            <th>Tanggal Akhir</th>
+                            <th>Status</th>
+                            <th>Kehadiran</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1 + ($pager->getCurrentPage('member') - 1) * $pager->getPerPage('member'); ?>
+                        <?php foreach($member as $m): ?>
+                            <tr>
+                                <td><?= $i ?></td>
+                                <td><?= $m['nama_member'] ?></td>
+                                <td><?= $m['nomor_hp'] ?></td>
+                                <td><?= $m['agama'] ?></td>
+                                <td><?= $m['tanggal_akhir'] ?></td>
+                                <td><span class="status-badge <?= strtolower($m['status']) ?>"><?= ucfirst($m['status']) ?></span></td>
+                                <td>
+                                    <form action="<?= base_url('dashboard/hadir/'.$m['id_member']) ?>" method="post">
+                                        <button type="submit" 
+                                        style="padding: 5px 10px; border: none; border-radius: 5px; background-color: #007BFF; 
+                                            color: white; cursor: pointer; font-family: 'Poppins', sans-serif; font-weight: 500;">
+                                            Check In
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            <?php $i++; ?>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?= $pager->links('member', 'default_pager', ['page' => 'attendance-member']) ?>
+            </div>
+        </div>
+
+        <!-- HALAMAN REPORT MEMBER -->
+        <div id="report-member" class="menu-content">
+            <h2 style="font-family: 'Poppins', sans-serif; font-weight: 300; font-size: 1.5em; color: black;">Report Member</h2>
+
+            <table class="member-info-table">
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Nama Member</th>
+                        <th>Tanggal</th>
+                        <th>Waktu</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php $i = 1; ?>
+                    <?php foreach ($kehadiran as $k): ?>
+                        <tr>
+                            <td><?= $i++ ?></td>
+                            <td><?= $k['id_member'] ?></td>
+                            <td><?= $k['tanggal'] ?></td>
+                            <td><?= $k['waktu'] ?></td>
+                        </tr>
+                    <?php endforeach ?>
+                </tbody>
+            </table>
+        </div>
 
     <script>
         function showContent(menuId) {
@@ -426,8 +575,39 @@
                 activeItem.classList.add('active');
             }
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-hide alerts after 3 seconds
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                setTimeout(function() {
+                    alert.style.transition = 'opacity 0.5s ease-in-out';
+                    alert.style.opacity = '0';
+                    setTimeout(function() {
+                        alert.remove();
+                    }, 500);
+                }, 3000);
+            });
+        });
+
+        // Fungsi Untuk Pencarian// AJAX JS
+        document.getElementById("search-bar").addEventListener("input", function () {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll(".member-info-table tbody tr");
+
+        rows.forEach(row => {
+            const name = row.cells[1].textContent.toLowerCase();
+            const phone = row.cells[2].textContent.toLowerCase();
+            const email = row.cells[3] ? row.cells[3].textContent.toLowerCase() : "";
+
+            if (name.includes(searchValue) || phone.includes(searchValue) || email.includes(searchValue)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
     </script>
 </body>
 </html>
-
 

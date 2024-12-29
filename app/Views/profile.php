@@ -262,6 +262,7 @@
     </style>
 </head>
 <body>
+
     <!-- Navbar -->
     <div class="navbar">
         <div class="brand-title">PF <span style="color: red;">GYM</span> & FITNESS</div>
