@@ -8,7 +8,7 @@ class kehadiranModel extends Model
 {
     protected $table = 'kehadiran';  
     protected $primaryKey = 'id_kedatangan';
-    protected $allowedFields = ['id_member', 'tanggal', 'waktu'];
+    protected $allowedFields = ['id_member', 'tanggal_datang', 'waktu'];
 
     public function getAllKehadiran()
     {

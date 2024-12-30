@@ -136,30 +136,36 @@ class dashboard extends BaseController
         // Set zona waktu ke GMT+7 (WIB)
         date_default_timezone_set('Asia/Jakarta');
         
+        // Ambil data member berdasarkan ID
         $member = $this->memberModel->find($id_member);
         
+        // Validasi apakah member ada
         if (!$member) {
             session()->setFlashdata('error', 'Member tidak ditemukan');
             return redirect()->to('/dashboard');
         }
         
+        // Validasi status member
         if (strtolower($member['status']) === 'inactive') {
             session()->setFlashdata('error', 'Member Tidak Aktif, Tidak dapat melakukan Check in');
             return redirect()->to('/admin');
         }
         
+        // Membuat instance model kehadiran
         $kehadiranModel = new \App\Models\kehadiranModel();
         
+        // Data yang akan disimpan
         $data = [
-            'id_member' => $id_member,
-            'tanggal' => date('Y-m-d'), 
-            'waktu' => date('H:i:s'),  
+            'id_member'        => $id_member,
+            'tanggal_datang'   => date('Y-m-d 00:00:00'), 
+            'waktu'            => date('H:i:s'),           
         ];
-        
+
         $kehadiranModel->insert($data);
-        
         session()->setFlashdata('success', 'Member ' . $member['nama_member'] . ' berhasil check in hari ini');
+
         return redirect()->to('/admin');
     }
+    
        
 }

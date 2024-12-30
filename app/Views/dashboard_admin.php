@@ -545,15 +545,15 @@
                         <tr>
                             <td><?= $i++ ?></td>
                             <td><?= $k['nama_member'] ?></td>
-                            <td><?= $k['tanggal'] ?></td>
+                            <td><?= $k['tanggal_datang'] ?></td>
                             <td><?= $k['waktu'] ?></td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
             </table>
         </div>
-
-    <script>
+</body>
+<script>
         function showContent(menuId) {
             // Hide all menu contents
             var contents = document.querySelectorAll('.menu-content');
@@ -608,6 +608,5 @@
         });
     });
     </script>
-</body>
 </html>
 
