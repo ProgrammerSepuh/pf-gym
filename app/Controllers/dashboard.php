@@ -40,6 +40,7 @@ class dashboard extends BaseController
         $totalAktif = $this->memberModel->where('status', 'tidak')->countAllResults();
         $totalNoAktif = $this->memberModel->where('status', 'aktif')->countAllResults();
         $kehadiran = $this->kehadiranModel->findAll();
+        $kedatangan = $this->kehadiranModel->getAllKehadiran();
     
         $member = $this->memberModel->joinmembership();
         
@@ -52,6 +53,7 @@ class dashboard extends BaseController
             'pager' => $this->memberModel->pager,
             'search' => $keyword,
             'kehadiran' => $kehadiran,
+            'kedatangan' => $kedatangan,
         ];
     
         echo view('dashboard_admin', $data);
@@ -60,14 +62,11 @@ class dashboard extends BaseController
     public function reportMember()
     {
         // Ambil semua data kehadiran
-        $kehadiran = $this->kehadiranModel->getAllKehadiran();
-
-        // Kirim data kehadiran ke view report-member
         $data = [
             'kehadiran' => $kehadiran
         ];
 
-        return view('admin', $data);  // Pastikan ini sesuai dengan view yang Anda gunakan
+        return view('admin', $data); 
     }
     
     public function attendance()

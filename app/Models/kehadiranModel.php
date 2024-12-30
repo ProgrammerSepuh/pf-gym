@@ -12,7 +12,8 @@ class kehadiranModel extends Model
 
     public function getAllKehadiran()
     {
-        return $this->join('member', 'member.id_member = kehadiran.id_member') 
+        return $this->join('member', 'member.id_member = kehadiran.id_member')->orderBy('id_kedatangan','desc') 
         ->findAll();
+
     }
 }

@@ -541,10 +541,10 @@
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
-                    <?php foreach ($kehadiran as $k): ?>
+                    <?php foreach ($kedatangan as $k): ?>
                         <tr>
                             <td><?= $i++ ?></td>
-                            <td><?= $k['id_member'] ?></td>
+                            <td><?= $k['nama_member'] ?></td>
                             <td><?= $k['tanggal'] ?></td>
                             <td><?= $k['waktu'] ?></td>
                         </tr>
