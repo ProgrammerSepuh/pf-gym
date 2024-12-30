@@ -85,4 +85,59 @@
         </div>
     </div>
 </body>
+<script>
+        function showContent(menuId) {
+            // Hide all menu contents
+            var contents = document.querySelectorAll('.menu-content');
+            contents.forEach(function(content) {
+                content.classList.remove('active');
+            });
+
+            // Show the clicked menu's content
+            document.getElementById(menuId).classList.add('active');
+
+            // Update active class on sidebar menu items
+            var menuItems = document.querySelectorAll('.menu-item');
+            menuItems.forEach(function(item) {
+                item.classList.remove('active');
+            });
+
+            var activeItem = document.querySelector('a[href="#' + menuId + '"]');
+            if (activeItem) {
+                activeItem.classList.add('active');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-hide alerts after 3 seconds
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                setTimeout(function() {
+                    alert.style.transition = 'opacity 0.5s ease-in-out';
+                    alert.style.opacity = '0';
+                    setTimeout(function() {
+                        alert.remove();
+                    }, 500);
+                }, 3000);
+            });
+        });
+
+        // Fungsi Untuk Pencarian// AJAX JS
+        document.getElementById("search-bar").addEventListener("input", function () {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll(".member-info-table tbody tr");
+
+        rows.forEach(row => {
+            const name = row.cells[1].textContent.toLowerCase();
+            const phone = row.cells[2].textContent.toLowerCase();
+            const email = row.cells[3] ? row.cells[3].textContent.toLowerCase() : "";
+
+            if (name.includes(searchValue) || phone.includes(searchValue) || email.includes(searchValue)) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        });
+    });
+    </script>
 </html>
