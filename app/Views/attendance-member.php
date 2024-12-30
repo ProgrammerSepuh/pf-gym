@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Admin</title>
+    <title>Attandance Membership</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="<?php echo base_url('assets/style.css')?>">
@@ -78,64 +78,48 @@
                 <?= session()->getFlashdata('success') ?>
             </div>
         <?php endif; ?>
-        
-        <!-- Dashboard Content -->
-        <div id="dashboard" class="menu-content active">
-            <h1 style="font-family: 'Poppins', sans-serif; font-weight: 300; font-size: 1.5em; color: black;">Dashboard</h1>
-            <h3 style="font-family: 'Poppins', sans-serif; font-weight: 100; font-size: 1em; color: black;">Laporan Bulanan</h3>
-            <div class="dashboard-stats">
-                <div class="dashboard-card">
-                    <h4>Member Baru</h4>
-                    <div class="number"><?= $baru ?></div>
-                </div>
-                <div class="dashboard-card">
-                    <h4>Member Aktif</h4>
-                    <div class="number"><?= $aktif ?></div>
-                </div>
-                <div class="dashboard-card">
-                    <h4>Tidak Aktif</h4>
-                    <div class="number"><?= $tidak ?></div>
-                </div>
-                <div class="dashboard-card">
-                    <h4>Total Member</h4>
-                    <div class="number"><?=$totalMember ?></div>
-                </div>
-            </div>
 
-            <div class="member-info-section">
-                <h3 style="font-family: 'Poppins', sans-serif; font-weight: 100; font-size: 1em; color: black;">Informasi Member</h3>
-                
+        <!-- Attandance Member -->
+        <div class="member-info-section">
+                <h3 style="font-family: 'Poppins', sans-serif; font-weight: 100; font-size: 1em; color: black;">Daftar Kehadiran Member</h3>
+
                 <table class="member-info-table">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Id Member</th>
                             <th>Username</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Agama</th>
                             <th>Phone Number</th>
-                            <th>Tanggal Habis</th>
+                            <th>Agama</th>
+                            <th>Tanggal Akhir</th>
                             <th>Status</th>
+                            <th>Kehadiran</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i = 1;?>
-                        <?php foreach($member as $m):?>
+                        <?php $i = 1 + ($pager->getCurrentPage('member') - 1) * $pager->getPerPage('member'); ?>
+                        <?php foreach($member as $m): ?>
                             <tr>
                                 <td><?= $i ?></td>
-                                <td><?= $m['id_member']?></td>
-                                <td><?= $m['nama_member']?></td>
-                                <td><?= $m['jenis_kelamin']?></td>
-                                <td><?= $m['agama']?></td>
-                                <td><?= $m['nomor_hp']?></td>
-                                <td><?= $m['tanggal_akhir']?></td>
-                                <td><span class="status-badge <?= $m['status']?>"><?= $m['status']?></span></td>
+                                <td><?= $m['nama_member'] ?></td>
+                                <td><?= $m['nomor_hp'] ?></td>
+                                <td><?= $m['agama'] ?></td>
+                                <td><?= $akhir['tanggal_akhir'] ?></td>
+                                <td><span class="status-badge <?= strtolower($m['status']) ?>"><?= ucfirst($m['status']) ?></span></td>
+                                <td>
+                                    <form action="<?= base_url('dashboard/hadir/'.$m['id_member']) ?>" method="post">
+                                        <button type="submit" 
+                                        style="padding: 5px 10px; border: none; border-radius: 5px; background-color: #007BFF; 
+                                            color: white; cursor: pointer; font-family: 'Poppins', sans-serif; font-weight: 500;">
+                                            Check In
+                                        </button>
+                                    </form>
+                                </td>
                             </tr>
-                            <?php  $i++ ?>
-                        <?php endforeach ?>
+                            <?php $i++; ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
-                <?= $pager->links('member', 'default_pager') ?>
+                <?= $pager->links('member', 'default_pager', ['page' => 'attendance-member']) ?>
             </div>
         </div>
     </div>

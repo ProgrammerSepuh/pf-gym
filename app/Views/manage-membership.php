@@ -78,65 +78,10 @@
                 <?= session()->getFlashdata('success') ?>
             </div>
         <?php endif; ?>
-        
-        <!-- Dashboard Content -->
-        <div id="dashboard" class="menu-content active">
-            <h1 style="font-family: 'Poppins', sans-serif; font-weight: 300; font-size: 1.5em; color: black;">Dashboard</h1>
-            <h3 style="font-family: 'Poppins', sans-serif; font-weight: 100; font-size: 1em; color: black;">Laporan Bulanan</h3>
-            <div class="dashboard-stats">
-                <div class="dashboard-card">
-                    <h4>Member Baru</h4>
-                    <div class="number"><?= $baru ?></div>
-                </div>
-                <div class="dashboard-card">
-                    <h4>Member Aktif</h4>
-                    <div class="number"><?= $aktif ?></div>
-                </div>
-                <div class="dashboard-card">
-                    <h4>Tidak Aktif</h4>
-                    <div class="number"><?= $tidak ?></div>
-                </div>
-                <div class="dashboard-card">
-                    <h4>Total Member</h4>
-                    <div class="number"><?=$totalMember ?></div>
-                </div>
-            </div>
 
-            <div class="member-info-section">
-                <h3 style="font-family: 'Poppins', sans-serif; font-weight: 100; font-size: 1em; color: black;">Informasi Member</h3>
-                
-                <table class="member-info-table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Id Member</th>
-                            <th>Username</th>
-                            <th>Jenis Kelamin</th>
-                            <th>Agama</th>
-                            <th>Phone Number</th>
-                            <th>Tanggal Habis</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $i = 1;?>
-                        <?php foreach($member as $m):?>
-                            <tr>
-                                <td><?= $i ?></td>
-                                <td><?= $m['id_member']?></td>
-                                <td><?= $m['nama_member']?></td>
-                                <td><?= $m['jenis_kelamin']?></td>
-                                <td><?= $m['agama']?></td>
-                                <td><?= $m['nomor_hp']?></td>
-                                <td><?= $m['tanggal_akhir']?></td>
-                                <td><span class="status-badge <?= $m['status']?>"><?= $m['status']?></span></td>
-                            </tr>
-                            <?php  $i++ ?>
-                        <?php endforeach ?>
-                    </tbody>
-                </table>
-                <?= $pager->links('member', 'default_pager') ?>
-            </div>
+        <!-- Manage Membership -->
+        <div id="manage-membership" class="menu-content">
+            <h2>Manage Membership</h2>
         </div>
     </div>
 </body>

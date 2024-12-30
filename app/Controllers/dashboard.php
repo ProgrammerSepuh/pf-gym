@@ -14,7 +14,8 @@ class dashboard extends BaseController
     protected $riwayatModel;
     protected $kehadiranModel; 
 
-    public function __Construct(){
+    public function __Construct()
+    {
         $this->session = \Config\Services::session();
         $this->memberModel = new memberModel;
         $this->membershipModel = new membershipModel;
@@ -59,6 +60,26 @@ class dashboard extends BaseController
         echo view('dashboard_admin', $data);
     }
 
+    // Halaman Data Member // ZHAXI
+    public function dataMember()
+    {
+        $data = [
+            'members' => $this->memberModel->findAll()
+        ];
+
+        return view('data-member', $data);
+    }
+
+    // 
+    public function manageMembership()
+    {
+        $data = [
+            'membership' => $this->membershipModel->findAll()
+        ];
+
+        return view('manage-membership', $data);
+    }
+
     public function reportMember()
     {
         // Ambil semua data kehadiran
@@ -69,18 +90,22 @@ class dashboard extends BaseController
         return view('admin', $data); 
     }
     
-    public function attendance()
+    public function attendanceMember()
     {
+        $member = $this->kehadiranModel->getAllKehadiran();
+        $akhir = $this->memberModel->joinMembership();
         $perPage = 10;
         $kehadiran = $this->kehadiranModel->paginate($perPage, 'attendance');
         $pager = $this->kehadiranModel->pager;
     
         $data = [
+            'akhir' => $akhir,
+            'member' => $member,
             'kehadiran' => $kehadiran,
             'pager' => $pager
         ];
     
-        return view('admin', $data);
+        return view('attendance-member', $data);
     }
     
 
