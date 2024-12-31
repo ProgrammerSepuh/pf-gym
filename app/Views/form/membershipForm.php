@@ -465,7 +465,7 @@
                 <div class="icon-box"><i class="fas fa-user"></i></div>
                 Data Member
             </a>
-            <a href="/admin#manage-membership" class="menu-item <?= (uri_string() == 'admin') ? 'active' : '' ?>"  onclick="showContent('manage-membership')">
+            <a href="/admin#manage-membership" class="menu-item" onclick="showContent('manage-membership')">
                 <div class="icon-box"><i class="fas fa-file-alt"></i></div> 
                 Manage Membership
             </a>
