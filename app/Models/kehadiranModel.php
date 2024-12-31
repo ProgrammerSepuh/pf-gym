@@ -14,5 +14,6 @@ class kehadiranModel extends Model
     {
         return $this->join('member', 'member.id_member = kehadiran.id_member')->orderBy('id_kedatangan','desc') 
         ->findAll();
+
     }
 }

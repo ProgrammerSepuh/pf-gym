@@ -34,25 +34,25 @@
             </a>
             
             <!-- Data Member -->
-            <a href="<?= base_url('/member') ?>" class="menu-item <?= (uri_string() == 'member') ? 'active' : '' ?>">
+            <a href="<?= base_url('/data-member') ?>" class="menu-item <?= (uri_string() == 'member') ? 'active' : '' ?>">
                 <div class="icon-box"><i class="fas fa-user"></i></div>
                 Data Member
             </a>
             
             <!-- Manage Membership -->
-            <a href="<?= base_url('/manage-membership') ?>" class="menu-item <?= (uri_string() == 'manage-membership') ? 'active' : '' ?>">
+            <a href="<?= base_url('/admin#manage-membership') ?>" class="menu-item <?= (uri_string() == 'manage-membership') ? 'active' : '' ?>">
                 <div class="icon-box"><i class="fas fa-file-alt"></i></div> 
                 Manage Membership
             </a>
             
             <!-- Attendance Member -->
-            <a href="<?= base_url('/attendance-member') ?>" class="menu-item <?= (uri_string() == 'attendance-member') ? 'active' : '' ?>">
+            <a href="<?= base_url('/admin#attendance-member') ?>" class="menu-item <?= (uri_string() == 'attendance-member') ? 'active' : '' ?>">
                 <div class="icon-box"><i class="fas fa-calendar-check"></i></div>
                 Attendance Member
             </a>
             
             <!-- Report Member -->
-            <a href="<?= base_url('/report-member') ?>" class="menu-item <?= (uri_string() == 'report-member') ? 'active' : '' ?>">
+            <a href="<?= base_url('/admin#report-member') ?>" class="menu-item <?= (uri_string() == 'report-member') ? 'active' : '' ?>">
                 <div class="icon-box"><i class="fas fa-chart-pie"></i></div> 
                 Report Member
             </a>
@@ -68,20 +68,50 @@
     <!-- Main Content -->
     <div class="content">
         <!-- Fungsi Alert -->
-        <?php if (session()->has('error')): ?>
-            <div class="alert error" style="background-color: #f8d7da; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
-                <?= session()->getFlashdata('error') ?>
-            </div>
-        <?php endif; ?>
-        <?php if (session()->has('success')): ?>
-            <div class="alert success" style="background-color: #d4edda; color: #155724; padding: 12px; border-radius: 4px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
-                <?= session()->getFlashdata('success') ?>
-            </div>
-        <?php endif; ?>
+        <div id="dashboard" class="menu-content active">
+            <h1 style="font-family: 'Poppins', sans-serif; font-weight: 300; font-size: 1.5em; color: black;">Data Member</h1>
+            <h3 style="font-family: 'Poppins', sans-serif; font-weight: 100; font-size: 1em; color: black;">Informasi Member</h3>
 
-        <!-- Data Member -->
-        <div id="data-member" class="menu-content">
-            <h2>Data Member</h2>
+            <div class="member-info-section">
+                <div class="box" style="widht:100%;">
+                    <a href="<?= base_url('dashboard/membership/memberAdd')?>" style="background-color: #5CB338; float: right; padding: 10px 20px; margin: 0px 0px 20px 0px; border-radius:5px; text-decoration:none; color:#ffffff">Tambahkan Member</a>
+                    <a href="<?= base_url('dashboard/membership/memberAdd')?>" style="background-color: #5CB338; float: right; padding: 10px 20px; margin: 0px 10px 20px 10px; border-radius:5px; text-decoration:none; color:#ffffff">Tambahkan Membership Member</a>
+                </div>
+                <table class="member-info-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Id Member</th>
+                            <th>Username</th>
+                            <th>Alamat</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Agama</th>
+                            <th>Phone Number</th>
+                            <th>Tanggal Habis</th>
+                            <th>Status</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $i = 1;?>
+                        <?php foreach($member as $m):?>
+                            <tr>
+                                <td><?= $i ?></td>
+                                <td><?= $m['id_member']?></td>
+                                <td><?= $m['nama_member']?></td>
+                                <td><?= $m['alamat']?></td>
+                                <td><?= $m['jenis_kelamin']?></td>
+                                <td><?= $m['agama']?></td>
+                                <td><?= $m['nomor_hp']?></td>
+                                <td><?= $m['tanggal']?></td>
+                                <td><a href="<?= base_url('/dashboard/membership/membershipForm/'.$m['id_member'])?>"><span class="status-badge <?= $m['status']?>"><?= $m['status']?></span></a></td>
+                            </tr>
+                            <?php  $i++ ?>
+                        <?php endforeach ?>
+                    </tbody>
+                </table>
+                 <?= $pager->links('member', 'default_pager') ?>
+            </div>
         </div>
         
     </div>

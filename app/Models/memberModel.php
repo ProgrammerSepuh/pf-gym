@@ -14,7 +14,7 @@ class memberModel extends Model
     }
 
     protected $allowedFields = [
-        'nama_member', 'email', 'nomor_hp', 'password' 
+        'id_riwayat', 'nama_member', 'email', 'nomor_hp', 'password' , 'alamat', 'agama', 'jenis_kelamin', 'status'
     ];
 
     public function getMemberWithSisaHari($id_member)

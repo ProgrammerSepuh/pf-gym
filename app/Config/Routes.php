@@ -5,50 +5,18 @@ use CodeIgniter\Router\RouteCollection;
 /**
  * @var RouteCollection $routes
  */
-// Halaman utama dan autentikasi
 $routes->get('/', 'Home');
 $routes->get('/auth', 'Home::login');
 $routes->post('/auth', 'Home::loginProses');
 
-// Halaman dashboard admin
-$routes->get('/admin', 'Dashboard');
-$routes->get('/admin', 'Dashboard::index');
+// dashboard
+$routes->get('/admin', 'dashboard');
 
-// Halaman profil admin
-$routes->get('/profile', 'Dashboard::profile');
-
-// Halaman data member
-$routes->get('/member', 'Dashboard::dataMember');
-
-// Halaman manage membership
-$routes->get('/manage-membership', 'Dashboard::manageMembership');
-
-// Halaman attendance member
-$routes->get('/attendance-member', 'Dashboard::attendanceMember');
-
-// Halaman report member
-$routes->get('/report-member', 'Dashboard::reportMember');
-
-// Fungsi tambahan
-$routes->post('dashboard/hadir/(:num)', 'Dashboard::hadir/$1');
-$routes->post('memberDashboard/updateProfile', 'memberDashboard::updateProfile');
-$routes->get('dashboard/report-member', 'Dashboard::reportMember');
-$routes->get('report-member', 'Dashboard::reportMember');
-
-// Fungsi untuk logout
-$routes->get('/logout', 'memberDashboard::logout');
+// dashboard-profile
+$routes->get('/profile', 'dashboard::profile');
 
 // dasjboard_member
 $routes->get('/member', 'memberDashboard::member');
-
-
-// $routes->get('/member', 'Dashboard::dataMember');
-// $routes->get('/manage-membership', 'Dashboard::manageMembership');
-// $routes->get('/attendance-member', 'Dashboard::attendanceMember');
-// $routes->get('/report-member', 'Dashboard::reportMember');
-
-
-//////////////////////////////////////////////
 
 // $routes->post('member/updateProfile', 'memberDashboard::updateProfile');
 // $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
@@ -58,12 +26,28 @@ $routes->get('/member', 'memberDashboard::member');
 // });
 
 // Fungsi untuk logout
-
+$routes->get('/logout', 'memberDashboard::logout');
 // app/Config/Routes.php
+$routes->post('memberDashboard/updateProfile', 'memberDashboard::updateProfile');
 
+$routes->post('dashboard/hadir/(:num)', 'Dashboard::hadir/$1');
+$routes->get('dashboard/report-member', 'Dashboard::reportMember');
+$routes->get('report-member', 'Dashboard::reportMember');
 
+// proses membership
+$routes->get('/dashboard/membership/formAdd', 'dashboard::formAdd');
+$routes->post('/dashboard/membership/formAdd', 'dashboard::save');
+$routes->get('/dashboard/delete/(:num)', 'dashboard::delete/$1');
 
+// Halaman manage membership
+$routes->get('/manage-membership', 'dashboard::membership');
+$routes->get('/dashboard/membership', 'dashboard::membership');
 
+// Halaman data member
+$routes->get('/data-member', 'Dashboard::dataMember');
+$routes->get('/dashboard/membership/memberAdd', 'dashboard::formMember');
+$routes->post('/dashboard/membership/saveMember', 'dashboard::saveMember');
+$routes->post('/dashboard/membership/membershipAdd', 'dashboard::saveMember');
 
-
-
+$routes->get('/dashboard/membership/membershipForm/(:num)', 'dashboard::member_membership/$1');
+$routes->post('/dashboard/membership/save_tambah_membership', 'dashboard::tambah_membership');

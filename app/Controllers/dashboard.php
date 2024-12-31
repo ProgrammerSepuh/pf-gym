@@ -14,8 +14,7 @@ class dashboard extends BaseController
     protected $riwayatModel;
     protected $kehadiranModel; 
 
-    public function __Construct()
-    {
+    public function __Construct(){
         $this->session = \Config\Services::session();
         $this->memberModel = new memberModel;
         $this->membershipModel = new membershipModel;
@@ -42,6 +41,7 @@ class dashboard extends BaseController
         $totalNoAktif = $this->memberModel->where('status', 'aktif')->countAllResults();
         $kehadiran = $this->kehadiranModel->findAll();
         $kedatangan = $this->kehadiranModel->getAllKehadiran();
+        $membership = $this->membershipModel->findAll();
     
         $member = $this->memberModel->joinmembership();
         
@@ -55,29 +55,10 @@ class dashboard extends BaseController
             'search' => $keyword,
             'kehadiran' => $kehadiran,
             'kedatangan' => $kedatangan,
+            'membership' => $membership
         ];
     
         echo view('dashboard_admin', $data);
-    }
-
-    // Halaman Data Member // ZHAXI
-    public function dataMember()
-    {
-        $data = [
-            'members' => $this->memberModel->findAll()
-        ];
-
-        return view('data-member', $data);
-    }
-
-    // 
-    public function manageMembership()
-    {
-        $data = [
-            'membership' => $this->membershipModel->findAll()
-        ];
-
-        return view('manage-membership', $data);
     }
 
     public function reportMember()
@@ -90,33 +71,40 @@ class dashboard extends BaseController
         return view('admin', $data); 
     }
     
-    public function attendanceMember()
+    public function attendance()
     {
-        $member = $this->kehadiranModel->getAllKehadiran();
-        $akhir = $this->memberModel->joinMembership();
-        $perPage = 10;
-        $kehadiran = $this->kehadiranModel->paginate($perPage, 'attendance');
+        $kehadiran = $this->kehadiranModel->findAll();
         $pager = $this->kehadiranModel->pager;
     
         $data = [
-            'akhir' => $akhir,
-            'member' => $member,
             'kehadiran' => $kehadiran,
             'pager' => $pager
         ];
     
-        return view('attendance-member', $data);
+        return view('admin', $data);
     }
     
 
     public function formAdd()
     {
-        $membership = $this->membershipModel->findAll();
-
-        $data = [
-            'membership' => $membership
-        ];
-        echo view('form/membershipForm', $data);
+        if ($this->request->getMethod() === 'post') {
+            // Ambil data dari request
+            $data = [
+                'durasi' => $this->request->getPost('durasi'),
+                'jenis_membership' => $this->request->getPost('jenis_membership'),
+                'fasilitas' => $this->request->getPost('fasilitas'),
+                'harga' => $this->request->getPost('harga'),
+            ];
+    
+            // Simpan data ke database menggunakan model
+            $this->membershipModel->save($data);
+    
+            // Redirect dengan notifikasi sukses
+            session()->setFlashdata('alert', 'Membership berhasil ditambahkan!');
+            return redirect()->to('/admin#manage-member');
+        }
+    
+        return view('form/membershipForm');
     }
 
     public function save()
@@ -132,7 +120,8 @@ class dashboard extends BaseController
             'durasi' => $durasi,
             'fasilitas' => $fasilitas,
         ]);
-        return redirect()->to('/dashboard/membership');
+        session()->setFlashdata('alert', 'Membership berhasil disimpan!');
+        return redirect()->to('/admin#manage-member');
     }
 
     public function membership()
@@ -152,7 +141,10 @@ class dashboard extends BaseController
     public function delete($id)
     {
         $this->membershipModel->delete($id);
-        return redirect()->to('/dashboard/membership');
+        
+        // Redirect dengan notifikasi sukses
+        session()->setFlashdata('alert', 'Membership berhasil dihapus!');
+        return redirect()->to('/admin#manage-member');
     }
 
     
@@ -192,5 +184,82 @@ class dashboard extends BaseController
         return redirect()->to('/admin');
     }
     
-       
+    // ZAKI
+    public function member_membership($id){
+        $user = $this->memberModel->select('*')->where('id_member', $id)->first();
+
+        $membership = $this->membershipModel->findAll();
+
+        $user = $user['nama_member'];
+
+        $data = [
+            'id' => $id,
+            'user' => $user,
+            'membership' => $membership
+        ];
+
+        return view('form/member_membership', $data);
+    }
+
+    public function tambah_membership(){
+
+        $id_membership = $this->request->getPost('id_membership');
+        
+        $id_user = $this->request->getPost('id_user');
+
+        $id_riwayat = rand(1000, 9999);
+
+        $data = [
+            'id_riwayat' => '2',
+            'status' => 'Active'
+        ];
+
+        $this->memberModel->update($id_user, $data);
+
+        return redirect()->to('/member');
+    }
+
+        // Halaman Data Member // ZHAXI
+        public function dataMember()
+        {
+            $data = [
+                'member' => $this->memberModel->orderBy('id_member','desc')->paginate(6,'member'),
+                'pager' => $this->memberModel->pager,
+            ];
+    
+            return view('data-member', $data);
+        }
+        public function formMember(){
+            $member = $this->membershipModel->findAll();
+            $data = [
+                'member' => $this->membershipModel->findAll()
+            ];
+    
+            return view('form/memberForm', $data);
+        }
+    
+        public function saveMember(){
+            $data = [
+                $namaMember = $this->request->getpost('namaMember'),
+                $password = $this->request->getpost('password'),
+                $email = $this->request->getpost('email'),
+                $noHp = $this->request->getpost('noHp'),
+                $alamat = $this->request->getpost('alamat'),
+                $jenis_kelamin = $this->request->getpost('jenis_kelamin'),
+                $agama = $this->request->getpost('agama'),
+            ];
+    
+            $this->memberModel->save([
+                'nama_member' => $namaMember,
+                'password' => $password,
+                'email' => $email,
+                'nomor_hp' => $noHp,
+                'alamat' => $alamat,
+                'agama' => $agama,
+                'jenis_kelamin' => $jenis_kelamin,
+                'status' => 'Inactive'
+            ]);
+    
+        }
+
 }
