@@ -18,13 +18,6 @@ $routes->get('/profile', 'dashboard::profile');
 // dasjboard_member
 $routes->get('/member', 'memberDashboard::member');
 
-// $routes->post('member/updateProfile', 'memberDashboard::updateProfile');
-// $routes->group('', ['namespace' => 'App\Controllers'], function($routes) {
-//     // Route ke dashboard member
-//     $routes->get('member', 'memberDashboard::member');
-//     $routes->post('member/updateProfile', 'memberDashboard::updateProfile');
-// });
-
 // Fungsi untuk logout
 $routes->get('/logout', 'memberDashboard::logout');
 // app/Config/Routes.php
@@ -51,3 +44,6 @@ $routes->post('/dashboard/membership/membershipAdd', 'dashboard::saveMember');
 
 $routes->get('/dashboard/membership/membershipForm/(:num)', 'dashboard::member_membership/$1');
 $routes->post('/dashboard/membership/save_tambah_membership', 'dashboard::tambah_membership');
+
+$routes->post('dashboard/exportCsv', 'Dashboard::exportCsv');
+$routes->post('dashboard/exportCsv', 'Dashboard::exportCsv');

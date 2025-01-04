@@ -262,4 +262,115 @@ class dashboard extends BaseController
     
         }
 
+        public function exportCsv($config = [])
+        {
+            // Konfigurasi default
+            $defaultConfig = [
+                'filename' => 'report_member_' . date('Ymd'),
+                'delimiter' => ',',
+                'group_by' => 'tanggal_datang', // Kolom untuk pengelompokan, kosongkan jika tidak ingin dikelompokkan
+                'fields' => [ // Daftar kolom yang akan diekspor
+                    'nama_member' => 'Nama Member',
+                    'tanggal_datang' => 'Tanggal Datang',
+                    'waktu' => 'Waktu'
+                ],
+                'order_by' => ['tanggal_datang' => 'ASC'],
+                'conditions' => [] // Kondisi WHERE tambahan
+            ];
+    
+            // Gabungkan konfigurasi default dengan konfigurasi yang diberikan
+            $config = array_merge($defaultConfig, $config);
+    
+            // Bangun query dasar
+            $query = $this->kehadiranModel->select(array_keys($config['fields']));
+            
+            // Tambahkan join yang diperlukan
+            $query->join('member', 'member.id_member = kehadiran.id_member');
+    
+            // Tambahkan kondisi WHERE jika ada
+            foreach ($config['conditions'] as $field => $value) {
+                $query->where($field, $value);
+            }
+    
+            // Tambahkan pengurutan
+            foreach ($config['order_by'] as $field => $direction) {
+                $query->orderBy($field, $direction);
+            }
+    
+            // Ambil data
+            $data = $query->findAll();
+    
+            // Inisialisasi konten file
+            $fileContent = '';
+    
+            if ($config['group_by']) {
+                // Kelompokkan data berdasarkan kolom yang ditentukan
+                $groupedData = [];
+                foreach ($data as $row) {
+                    $groupKey = $row[$config['group_by']];
+                    if (!isset($groupedData[$groupKey])) {
+                        $groupedData[$groupKey] = [];
+                    }
+                    $groupedData[$groupKey][] = $row;
+                }
+    
+                // Generate konten CSV untuk data yang dikelompokkan
+                foreach ($groupedData as $groupKey => $records) {
+                    $fileContent .= "Kelompok: " . $groupKey . "\n";
+                    
+                    // Tambahkan header
+                    $headers = array_values($config['fields']);
+                    $fileContent .= implode($config['delimiter'], $headers) . "\n";
+    
+                    // Tambahkan data
+                    foreach ($records as $row) {
+                        $line = [];
+                        foreach (array_keys($config['fields']) as $field) {
+                            $line[] = $this->formatCsvField($row[$field]);
+                        }
+                        $fileContent .= implode($config['delimiter'], $line) . "\n";
+                    }
+    
+                    $fileContent .= "\n"; // Baris kosong antara kelompok
+                }
+            } else {
+                // Generate konten CSV untuk data tidak dikelompokkan
+                // Tambahkan header
+                $headers = array_values($config['fields']);
+                $fileContent .= implode($config['delimiter'], $headers) . "\n";
+    
+                // Tambahkan data
+                foreach ($data as $row) {
+                    $line = [];
+                    foreach (array_keys($config['fields']) as $field) {
+                        $line[] = $this->formatCsvField($row[$field]);
+                    }
+                    $fileContent .= implode($config['delimiter'], $line) . "\n";
+                }
+            }
+    
+            // Set response header dan return file
+            return $this->response
+                ->setHeader('Content-Type', 'text/csv')
+                ->setHeader('Content-Disposition', 'attachment; filename="' . $config['filename'] . '.csv"')
+                ->setBody($fileContent);
+        }
+    
+        /**
+         * Format nilai field untuk CSV
+         * 
+         * @param mixed $value
+         * @return string
+         */
+        private function formatCsvField($value)
+        {
+            // Escape quotes dan wrap dalam quotes jika diperlukan
+            if (strpos($value, ',') !== false || strpos($value, '"') !== false || strpos($value, "\n") !== false) {
+                return '"' . str_replace('"', '""', $value) . '"';
+            }
+            return $value;
+        }
+               
+
+
 }

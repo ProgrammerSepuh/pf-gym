@@ -501,7 +501,7 @@
                                 <input type="text">
                             </div>
                             <div class="box">
-                                <label for="">Passowrd</label>
+                                <label for="">Passoword</label>
                                 <input type="text">
                             </div>
                         </div>
@@ -521,10 +521,14 @@
                                 <input type="text">
                             </div>
                             <div class="box">
-                                <label for="">Jenis Membership</label>
+                            <label for="">Agama</label>
                                 <select id="cars" name="cars">
-                                    <option value="volvo">laki-laki</option>
-                                    <option value="saab">perempuan</option>
+                                    <option value="islam">islam</option>
+                                    <option value="Kristen Protestan">Kristen Protestan</option>
+                                    <option value="Kristen Katolik">Kristen Katolik</option>
+                                    <option value="Hindu">Hindu</option>
+                                    <option value="Buddha">Buddha</option>
+                                    <option value="Konghucu">Konghucu</option>
                                 </select>
                             </div>
                         </div>
@@ -536,29 +540,12 @@
                                     <option value="perempuan">perempuan</option>
                                 </select>
                             </div>
-                            <div class="box">
-                                <label for="">Agama</label>
-                                <select id="cars" name="cars">
-                                    <option value="islam">islam</option>
-                                    <option value="Kristen Protestan">Kristen Protestan</option>
-                                    <option value="Kristen Katolik">Kristen Katolik</option>
-                                    <option value="Hindu">Hindu</option>
-                                    <option value="Buddha">Buddha</option>
-                                    <option value="Konghucu">Konghucu</option>
-                                </select>
-                            </div>
                         </div>
                         <button>Tambahkan</button>
                      </form>
                      <!-- <form action="<?= base_url('dashboard/membership/formAdd')?>" method="post" class="member_form">
                         <label for="">nama member</label>
                         <input type="text">
-
-
-
-
-
-
                      </form> -->
             </div>
         </div>

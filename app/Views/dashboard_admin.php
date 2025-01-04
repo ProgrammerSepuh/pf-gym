@@ -648,32 +648,38 @@
             </div>
         </div>
 
-        <!-- HALAMAN REPORT MEMBER -->
-        <div id="report-member" class="menu-content">
-            <h2 style="font-family: 'Poppins', sans-serif; font-weight: 300; font-size: 1.5em; color: black;">Report Member</h2>
+<!-- HALAMAN REPORT MEMBER -->
+<div id="report-member" class="menu-content">
+    <h2 style="font-family: 'Poppins', sans-serif; font-weight: 300; font-size: 1.5em; color: black;">Report Member</h2>
 
-            <table class="member-info-table">
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Member</th>
-                        <th>Tanggal</th>
-                        <th>Waktu</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php $i = 1; ?>
-                    <?php foreach ($kedatangan as $k): ?>
-                        <tr>
-                            <td><?= $i++ ?></td>
-                            <td><?= $k['nama_member'] ?></td>
-                            <td><?= $k['tanggal_datang'] ?></td>
-                            <td><?= $k['waktu'] ?></td>
-                        </tr>
-                    <?php endforeach ?>
-                </tbody>
-            </table>
-        </div>
+    <!-- Button Export -->
+    <form action="<?= base_url('dashboard/exportCsv') ?>" method="post" style="margin-bottom: 20px;">
+        <button type="submit" class="btn-export">Export</button>
+    </form>
+
+    <table class="member-info-table">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Nama Member</th>
+                <th>Tanggal</th>
+                <th>Waktu</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php $i = 1; ?>
+            <?php foreach ($kedatangan as $k): ?>
+                <tr>
+                    <td><?= $i++ ?></td>
+                    <td><?= $k['nama_member'] ?></td>
+                    <td><?= $k['tanggal_datang'] ?></td>
+                    <td><?= $k['waktu'] ?></td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+</div>
+
 </body>
 <script>
         function showContent(menuId) {
