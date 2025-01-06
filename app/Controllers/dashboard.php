@@ -26,6 +26,12 @@ class dashboard extends BaseController
     {
         $keyword = $this->request->getGet('search'); 
         $date = date('m');
+
+        $tanggal_sekarang = date('Y-m-d');
+
+        // Update status menjadi 'Inactive' untuk semua member yang tanggal_akhir < tanggal_sekarang
+        $this->memberModel->where('tanggal_akhir <', $tanggal_sekarang)->set('status', 'Inactive')->update();
+        
     
         // Cek apakah ada keyword pencarian
         if ($keyword) {
@@ -37,13 +43,12 @@ class dashboard extends BaseController
     
         $memberBaru = $this->memberModel->select('*')->where('MONTH(tanggal)', $date)->countAllResults();
         $totalmember = $this->memberModel->countAll();
-        $totalAktif = $this->memberModel->where('status', 'tidak')->countAllResults();
-        $totalNoAktif = $this->memberModel->where('status', 'aktif')->countAllResults();
+        $totalAktif = $this->memberModel->where('status', 'Active')->countAllResults();
+        $totalNoAktif = $this->memberModel->where('status', 'Inactive')->countAllResults();
         $kehadiran = $this->kehadiranModel->findAll();
         $kedatangan = $this->kehadiranModel->getAllKehadiran();
         $membership = $this->membershipModel->findAll();
-    
-        $member = $this->memberModel->joinmembership();
+        $member = $this->memberModel->paginate(6, 'member');
         
         $data = [
             'totalMember' => $totalmember,
@@ -140,6 +145,10 @@ class dashboard extends BaseController
 
     public function delete($id)
     {
+        $data =([
+            'id_membership' => null
+        ]);
+        $this->riwayatModel->where('id_membership', $id)->set($data)->update();
         $this->membershipModel->delete($id);
         
         // Redirect dengan notifikasi sukses
@@ -205,18 +214,46 @@ class dashboard extends BaseController
 
         $id_membership = $this->request->getPost('id_membership');
         
-        $id_user = $this->request->getPost('id_user');
+        $id_member = $this->request->getPost('id_user');
 
-        $id_riwayat = rand(1000, 9999);
+        $tanggal_sekarang = date('Y-m-d');
 
-        $data = [
-            'id_riwayat' => '2',
-            'status' => 'Active'
-        ];
+         $this->riwayatModel->save([
+             'id_member' => $id_member,
+             'id_membership' => $id_membership,
+         ]);
 
-        $this->memberModel->update($id_user, $data);
+        $durasi = $this->membershipModel->select('durasi')->where('id_membership', $id_membership)->first();
+        $tanggal = $this->memberModel->select('tanggal_akhir')->where('id_member', $id_member)->first();
 
-        return redirect()->to('/member');
+        $tanggal_akhir = strtotime($tanggal['tanggal_akhir']);
+
+        $tanggal_sekarang = strtotime($tanggal_sekarang);
+
+        $durasi = $durasi['durasi'];
+
+        if ( $tanggal_akhir < $tanggal_sekarang) {
+            $tanggal_baru = strtotime("$durasi days", $tanggal_sekarang);
+            $tanggal = date('Y-m-d', $tanggal_baru);
+
+            $data = [
+                'tanggal_akhir' => $tanggal,
+                'status' => 'Active'
+            ];
+            $this->memberModel->update($id_member, $data);
+        } else {
+            $tanggal_baru = strtotime("+$durasi days", $tanggal_akhir);
+            
+            $tanggal = date('Y-m-d', $tanggal_baru);
+
+            $data = [
+                'tanggal_akhir' => $tanggal,
+                'status' => 'Active'
+            ];
+            $this->memberModel->update($id_member, $data);
+        }
+
+        return redirect()->to('data-member');
     }
 
         // Halaman Data Member // ZHAXI
@@ -240,10 +277,10 @@ class dashboard extends BaseController
     
         public function saveMember(){
             $data = [
-                $namaMember = $this->request->getpost('namaMember'),
+                $namaMember = $this->request->getpost('nama_member'),
                 $password = $this->request->getpost('password'),
                 $email = $this->request->getpost('email'),
-                $noHp = $this->request->getpost('noHp'),
+                $noHp = $this->request->getpost('no_hp'),
                 $alamat = $this->request->getpost('alamat'),
                 $jenis_kelamin = $this->request->getpost('jenis_kelamin'),
                 $agama = $this->request->getpost('agama'),
@@ -257,9 +294,11 @@ class dashboard extends BaseController
                 'alamat' => $alamat,
                 'agama' => $agama,
                 'jenis_kelamin' => $jenis_kelamin,
-                'status' => 'Inactive'
+                'status' => 'Inactive',
+                'tanggal_akhir' => date('Y-m-d')
             ]);
-    
+
+            return redirect()->to('data-member');
         }
 
         public function exportCsv($config = [])

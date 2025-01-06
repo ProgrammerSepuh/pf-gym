@@ -271,12 +271,12 @@
             text-align: center;
         }
 
-        .aktif {
+        .Active {
             background-color: #28a745;
             color: white;
         }
 
-        .tidak {
+        .Inactive {
             background-color: #dc3545;
             color: white;
         }
@@ -423,6 +423,108 @@
 
         .content .menu-content.active {
             display: block;
+        }
+        .membership {
+            background-color: #9197B3;
+            padding: 50px 10%;
+            text-align: center;
+        }
+
+        .membership-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 400;
+            font-size: 2.5em;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .membership-cards {
+            display: flex;
+            gap: 50px; 
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .membership-card {
+            background-color: #9197B3;
+            color: white;
+            width: 200px;
+            height: 300px;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            transition: transform 0.3s ease;
+        }
+        .membership-card2 {
+            color: white;
+            width: 200px;
+            height: 300px;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            transition: transform 0.3s ease;
+            border: 2px  #9197B3;
+            border-style: dotted;
+            text-decoration: none;
+        }
+
+        .membership-card h3 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-weight: 400;
+            font-size: 1,5em;
+            margin-bottom: 20px;
+        }
+
+        .membership-card p {
+            font-family: 'Bebas Neue', sans-serif;
+            font-weight: 100;
+            font-size: 1em;
+            margin-bottom: 20px;
+            text-align: center; 
+            color:rgb(79, 79, 79);
+        }
+
+        .membership-card ul {
+            list-style-type: none;
+            padding-left: 0;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .membership-card ul li{
+            font-family: 'Bebas Neue', sans-serif;
+            font-weight: 100;
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+
+        .join-button {
+            font-family: 'Bebas Neue', sans-serif;
+            font-weight: 100;
+            font-size: 1em;
+            padding: 5px 10px;
+            background-color: #F97C7C;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .join-button:hover {
+            background-color: #d10000;
         }
     </style>
 </head>

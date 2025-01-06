@@ -262,12 +262,12 @@
             text-align: center;
         }
 
-        .aktif {
+        .Active {
             background-color: #28a745;
             color: white;
         }
 
-        .tidak {
+        .Inactive {
             background-color: #dc3545;
             color: white;
         }

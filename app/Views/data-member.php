@@ -102,7 +102,7 @@
                                 <td><?= $m['jenis_kelamin']?></td>
                                 <td><?= $m['agama']?></td>
                                 <td><?= $m['nomor_hp']?></td>
-                                <td><?= $m['tanggal']?></td>
+                                <td><?= $m['tanggal_akhir']?></td>
                                 <td><a href="<?= base_url('/dashboard/membership/membershipForm/'.$m['id_member'])?>"><span class="status-badge <?= strtolower($m['status']) ?>" <?= $m['status']?>"><?= $m['status']?></span></a></td>
                             </tr>
                             <?php  $i++ ?>

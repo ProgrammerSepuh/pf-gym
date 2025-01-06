@@ -413,7 +413,7 @@
             flex-direction: column;
             margin: 10px 0px;
         }
-        .box input, select {
+        .box input, select, textarea {
             width: 350px;
             height: 40px;
             border:none;
@@ -421,6 +421,11 @@
             padding: 5px 10px;
             border-radius: 5px;
             color: #7E7E7E;
+        }
+        .box textarea {
+            width: 725px;
+            height: 500px;
+            padding: 10px;
         }
         .box input:focus {
             outline: none;
@@ -494,35 +499,45 @@
             <h3 style="font-family: 'Poppins', sans-serif; font-weight: 100; font-size: 1em; color: black;">Menambahkan Member</h3>
             <div class="membership-cards">
                     <!-- Card 1 -->
-                    <form action="<?= base_url('dashboard/membership/formAdd')?>" method="post">
+                    <form action="<?= base_url('dashboard/membership/saveMember')?>" method="post">
                         <div class="card-box">
                             <div class="box">
                                 <label for="">nama member</label>
-                                <input type="text">
+                                <input type="text" name="nama_member">
                             </div>
                             <div class="box">
                                 <label for="">Passoword</label>
-                                <input type="text">
+                                <input type="text" name="password">
                             </div>
                         </div>
                         <div class="card-box">
                             <div class="box">
                                 <label for="">Email</label>
-                                <input type="text">
+                                <input type="email" name="email">
                             </div>
                             <div class="box">
                                 <label for="">No Hendphone</label>
-                                <input type="text">
+                                <input type="text" name="no_hp">
                             </div>
                         </div>
                         <div class="card-box">
                             <div class="box">
                                 <label for="">alamat</label>
-                                <input type="text">
+                                <textarea name="alamat" id=""></textarea>
+                            </div>
+
+                        </div>
+                        <div class="card-box">
+                            <div class="box">
+                                <label for="">Jenis Kelamin</label>
+                                <select id="cars" name="jenis_kelamin">
+                                    <option value="laki-laki">laki-laki</option>
+                                    <option value="perempuan">perempuan</option>
+                                </select>
                             </div>
                             <div class="box">
                             <label for="">Agama</label>
-                                <select id="cars" name="cars">
+                                <select id="cars" name="agama">
                                     <option value="islam">islam</option>
                                     <option value="Kristen Protestan">Kristen Protestan</option>
                                     <option value="Kristen Katolik">Kristen Katolik</option>
@@ -532,21 +547,8 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="card-box">
-                            <div class="box">
-                                <label for="">Jenis Kelamin</label>
-                                <select id="cars" name="cars">
-                                    <option value="laki-laki">laki-laki</option>
-                                    <option value="perempuan">perempuan</option>
-                                </select>
-                            </div>
-                        </div>
                         <button>Tambahkan</button>
                      </form>
-                     <!-- <form action="<?= base_url('dashboard/membership/formAdd')?>" method="post" class="member_form">
-                        <label for="">nama member</label>
-                        <input type="text">
-                     </form> -->
             </div>
         </div>
     </div>

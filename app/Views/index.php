@@ -301,7 +301,7 @@
             background-color: #1c1c1c;
             color: white;
             padding: 30px;
-            width: auto;
+            width: 300px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             text-align: center; 
@@ -521,43 +521,21 @@
     <h2 class="membership-title">MEMBERSHIP PRICE PLAN</h2>
     <div class="membership-cards">
         <!-- Card 1 -->
-        <div class="membership-card">
-            <h3>MONTHLY</h3>
-            <p>VVIP MEMBERSHIP 1 MONTH</p>
-            <ul>
-                <li>STARTER PACK</li>
-                <li>COACHING CLINIC</li>
-                <li>INBODY MEASURE</li>
-                <li>FRIENDLY COMMUNITY</li>
-            </ul>
-            <button class="join-button">Rp. 139.000</button>
-        </div>
-        
-        <!-- Card 2 -->
-        <div class="membership-card">
-            <h3>3 MONTH</h3>
-            <p>VVIP MEMBERSHIP 3 MONTH</p>
-            <ul>
-                <li>STARTER PACK</li>
-                <li>COACHING CLINIC</li>
-                <li>INBODY MEASURE</li>
-                <li>FRIENDLY COMMUNITY</li>
-            </ul>
-            <button class="join-button">Rp. 348.000</button>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="membership-card">
-            <h3>6 MONTH</h3>
-            <p>VVIP MEMBERSHIP 6 MONTH</p>
-            <ul>
-                <li>STARTER PACK</li>
-                <li>COACHING CLINIC</li>
-                <li>INBODY MEASURE</li>
-                <li>FRIENDLY COMMUNITY</li>
-            </ul>
-            <button class="join-button">Rp. 648.000</button>
-        </div>
+        <?php foreach($membership as $m): ?>
+            <div class="membership-card">
+                <h3><?= $m['durasi'] ?> Days</h3>
+                <p><?= $m['jenis_membership']?></p>
+                <ul>
+                    <?php $fasilitas = explode(',', $m['fasilitas'])?>
+                    <?php foreach($fasilitas as $f):?>
+                        <li><?= esc($f) ?></li>
+                    <?php endforeach ?>
+                </ul>
+                <a href="https://wa.me/<?= $phone ?>?text=<?= $encodedMessage?>%20<?=$m['jenis_membership']?>" target="_blank" class="join-button">
+                    Rp. <?= number_format($m['harga'], 0, ',', '.'); ?>
+                </a>
+            </div>
+        <?php endforeach ?>
     </div>
 </div>
 

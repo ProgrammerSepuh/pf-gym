@@ -493,7 +493,7 @@
             <h3 style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2em; color: black;"><?= $user ?></h3>
             <div class="membership-cards">
                     <!-- Card 1 -->
-                    <form action="<?= base_url('/dashboard/membership/save_tambah_membership')?>" method="post">
+                    <form action="<?= base_url('dashboard/membership/save_tambah_membership')?>" method="post">
                         <div class="card-box">
                             <div class="box">
                                 <input type="hidden" name="id_user" value="<?= $id ?>">

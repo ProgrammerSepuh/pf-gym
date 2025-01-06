@@ -9,18 +9,13 @@ class memberModel extends Model
     protected $table      = 'member';
     protected $primaryKey = 'id_member';
 
-    public function joinMembership(){
-        return $this->select('member.* , riwayat.tanggal_akhir')->JOIN('riwayat', 'member.id_riwayat = riwayat.id_riwayat', 'left')->paginate(6, 'member');
-    }
-
     protected $allowedFields = [
-        'id_riwayat', 'nama_member', 'email', 'nomor_hp', 'password' , 'alamat', 'agama', 'jenis_kelamin', 'status'
+    'nama_member', 'email', 'nomor_hp', 'password' , 'alamat', 'agama', 'jenis_kelamin', 'status', 'tanggal_akhir'
     ];
 
     public function getMemberWithSisaHari($id_member)
     {
-        $member = $this->select('member.*, riwayat.tanggal_akhir')
-                       ->join('riwayat', 'member.id_riwayat = riwayat.id_riwayat', 'left')
+        $member = $this->select('*')
                        ->where('member.id_member', $id_member)
                        ->first();
 

@@ -3,21 +3,30 @@
 namespace App\Controllers;
 
 use App\Models\memberModel;
+use App\Models\MembershipModel;
 
 class Home extends BaseController
 {
     protected $memberModel;
+    protected $membershipModel;
 
     public function __Construct(){
         
         // $this->session = \Config\Services::session();
         $this->memberModel = new memberModel;
+        $this->membershipModel = new membershipModel;
     }
 
     public function index()
     {
+        $data = ([
+            'membership' => $this->membershipModel->findAll(),
+            'phone' => '6285157114802', // Ganti dengan nomor telepon tujuan
+            'encodedMessage' => urlencode('Halo, saya ingin berlangganan paket membership:'),
+        ]);
+
         echo view('navbar');
-        echo view('index');
+        echo view('index', $data);
         echo view('footer');
     }
 

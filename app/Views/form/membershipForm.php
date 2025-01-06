@@ -498,21 +498,21 @@
                         <div class="card-box">
                             <div class="box">
                                 <label for="namaMembership">Nama Membership</label>
-                                <input type="text" name="namaMembership" id="namaMembership" placeholder="membership 1 Bulan">
+                                <input type="text" name="namaMembership" id="namaMembership" placeholder="Masukan nama membership">
                             </div>
                             <div class="box">
                                 <label for="namaMembership">Harga Membership</label>
-                                <input type="text" name="harga" id="namaMembership" placeholder="400000">
+                                <input type="text" name="harga" id="namaMembership" placeholder="Masukan harga">
                             </div>
                         </div>
                         <div class="card-box">
                             <div class="box">
                                 <label for="namaMembership">Durasi membership</label>
-                                <input type="text" name="durasi" id="namaMembership" placeholder="30">
+                                <input type="text" name="durasi" id="namaMembership" placeholder="Masukan durasi">
                             </div>
                             <div class="box">
                                 <label for="namaMembership">Fasilitas membership </label>
-                                <input type="text" name="fasilitas" id="namaMembership" placeholder="E-boox, akses GYM 1 bulan, Mentor">
+                                <input type="text" name="fasilitas" id="namaMembership" placeholder="Masukan fasilitas">
                                 <sub style="color: #7E7E7E;">Masukan fasilitas yang dipisahkan koma</sub>
                             </div>
                         </div>
