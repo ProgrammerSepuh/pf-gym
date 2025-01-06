@@ -723,17 +723,17 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i = 1 + ($pager->getCurrentPage('member') - 1) * $pager->getPerPage('member'); ?>
-                        <?php foreach($member as $m): ?>
+                        <?php $i = 1?>
+                        <?php foreach($hadir as $h): ?>
                             <tr>
                                 <td><?= $i ?></td>
-                                <td><?= $m['nama_member'] ?></td>
-                                <td><?= $m['nomor_hp'] ?></td>
-                                <td><?= $m['agama'] ?></td>
-                                <td><?= $m['tanggal_akhir'] ?></td>
-                                <td><span class="status-badge <?= strtolower($m['status']) ?>"><?= ucfirst($m['status']) ?></span></td>
+                                <td><?= $h['nama_member'] ?></td>
+                                <td><?= $h['nomor_hp'] ?></td>
+                                <td><?= $h['agama'] ?></td>
+                                <td><?= $h['tanggal_akhir'] ?></td>
+                                <td><span class="status-badge <?= strtolower($h['status']) ?>"><?= ucfirst($h['status']) ?></span></td>
                                 <td>
-                                    <form action="<?= base_url('dashboard/hadir/'.$m['id_member']) ?>" method="post">
+                                    <form action="<?= base_url('dashboard/hadir/'.$h['id_member']) ?>" method="post">
                                         <button type="submit" 
                                         style="padding: 5px 10px; border: none; border-radius: 5px; background-color: #007BFF; 
                                             color: white; cursor: pointer; font-family: 'Poppins', sans-serif; font-weight: 500;">
@@ -746,7 +746,6 @@
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <?= $pager->links('member', 'default_pager', ['page' => 'attendance-member']) ?>
             </div>
         </div>
 

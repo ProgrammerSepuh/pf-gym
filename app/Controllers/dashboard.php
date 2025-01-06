@@ -49,6 +49,7 @@ class dashboard extends BaseController
         $kedatangan = $this->kehadiranModel->getAllKehadiran();
         $membership = $this->membershipModel->findAll();
         $member = $this->memberModel->paginate(6, 'member');
+        $hadir = $this->memberModel->findAll();
         
         $data = [
             'totalMember' => $totalmember,
@@ -60,7 +61,8 @@ class dashboard extends BaseController
             'search' => $keyword,
             'kehadiran' => $kehadiran,
             'kedatangan' => $kedatangan,
-            'membership' => $membership
+            'membership' => $membership,
+            'hadir' => $hadir
         ];
     
         echo view('dashboard_admin', $data);
