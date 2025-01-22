@@ -429,6 +429,128 @@
             }
         }
 
+        @media (max-width: 768px) {
+    .service-content {
+        flex-direction: column;
+        padding: 20px 5%;
+    }
+
+    .service-left {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .service-right {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .service-left p {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-height: 4.5em;
+        position: relative;
+    }
+
+    .service-left p::after {
+        content: "...";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        padding-left: 40px;
+        background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.85) 50%);
+    }
+
+    .service {
+        min-height: 100vh;
+        height: auto;
+    }
+
+    .service-right::before,
+    .service-right::after {
+        display: none;
+    }
+
+    .service-left h2 {
+        font-size: 2.5em;
+        margin-bottom: 15px;
+    }
+
+    .service-right img {
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto;
+        display: block;
+    }
+}
+
+@media (max-width: 480px) {
+    .service-left h2 {
+        font-size: 2em;
+    }
+
+    .service-left p {
+        font-size: 0.9em;
+        -webkit-line-clamp: 4;
+        max-height: 6em;
+    }
+}
+
+@media (max-width: 768px) {
+    .judul {
+        padding: 100px 5% 50px;
+        min-height: 100vh;
+        height: auto;
+    }
+
+    .judul-text {
+        padding-top: 40px;
+    }
+
+    .judul-text h2 {
+        font-size: 2.5em;
+    }
+
+    .judul-text h1 {
+        font-size: 3.5em;
+    }
+
+    .judul-subtext {
+        font-size: 1.5em;
+    }
+
+    /* Ensure proper spacing from top with fixed navbar if present */
+    body {
+        padding-top: env(safe-area-inset-top, 0px);
+    }
+}
+
+@media (max-width: 480px) {
+    .judul {
+        padding: 80px 5% 40px;
+    }
+    
+    .judul-text {
+        padding-top: 30px;
+    }
+
+    .judul-text h2 {
+        font-size: 2em;
+    }
+
+    .judul-text h1 {
+        font-size: 3em;
+    }
+
+    .judul-subtext {
+        font-size: 1.2em;
+    }
+}
+
     </style>
 </head>
 <body>

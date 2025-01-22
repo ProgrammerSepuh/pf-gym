@@ -30,10 +30,7 @@
             padding: 0;
             box-sizing: border-box;
         }
-        /* body {
-            width: 100%;
-            margin: auto;
-        } */
+        /* First, modify the existing nav CSS */
         nav {
             position: fixed; 
             width: 100%;
@@ -45,6 +42,7 @@
             color: white;
             z-index: 10; 
         }
+
         .logo {
             font-family: "Bebas Neue", sans-serif;
             font-weight: 400;
@@ -64,10 +62,12 @@
             background-color: #4a6fa1; 
             transform: translateY(-3px); 
         }
+
         .bar {
             display: flex;
             gap: 20px;
         }
+
         .bar h4 {
             font-family: "Bebas Neue", sans-serif;
             font-weight: 400;
@@ -75,13 +75,81 @@
             transition: color 0.3s ease;
             cursor: pointer;
         }
+
         .bar h4:hover {
             color: #f39c12; 
+        }
+
+        /* Add hamburger menu icon */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5em;
+        }
+
+        /* Add responsive styles */
+        @media screen and (max-width: 768px) {
+            nav {
+                padding: 15px 5%;
+            }
+
+            .menu-toggle {
+                display: block;
+                order: 1;
+            }
+
+            .bar {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: #FF0000;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                gap: 15px;
+                transform: translateY(-100%);
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.3s ease;
+            }
+
+            .bar.active {
+                transform: translateY(0);
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .logo {
+                order: 2;
+                margin-left: auto;
+                font-size: 1.2em;
+                padding: 5px 15px;
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            nav {
+                padding: 10px 5%;
+            }
+
+            .logo {
+                font-size: 1em;
+                padding: 5px 10px;
+            }
+
+            .bar h4 {
+                font-size: 1.2em;
+            }
         }
     </style>
 </head>
 
 <nav>
+    <div class="menu-toggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    
     <div class="bar">
         <h4 data-scroll="#home">HOME</h4>
         <h4 data-scroll="#about">ABOUT</h4>
@@ -93,3 +161,29 @@
         <a href="<?php echo base_url("auth")?>">BERGABUNG!</a>
     </div>
 </nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    const menuToggle = document.querySelector('.menu-toggle');
+    const bar = document.querySelector('.bar');
+
+    menuToggle.addEventListener('click', function() {
+        bar.classList.toggle('active');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.menu-toggle') && !event.target.closest('.bar')) {
+            bar.classList.remove('active');
+        }
+    });
+
+    // Close menu when clicking on a link
+    const menuItems = document.querySelectorAll('.bar h4');
+    menuItems.forEach(item => {
+        item.addEventListener('click', function() {
+            bar.classList.remove('active');
+        });
+    });
+});
+</script>

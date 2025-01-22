@@ -171,17 +171,84 @@
 
         /* RESPONSIVE DESIGN */
         @media (max-width: 768px) {
+            body {
+                padding: 20px;
+                padding-top: 80px;
+            }
+
+            .navbar {
+                padding: 10px 20px;
+                position: fixed;
+                z-index: 1000;
+            }
+
+            .navbar a {
+                font-size: 1.5em;
+            }
+
             .login-container {
                 flex-direction: column;
                 height: auto;
+                min-height: unset;
+                margin-top: 20px;
             }
 
             .login-container::before {
-                display: none; 
+                display: none;
+            }
+
+            .login-left {
+                display: none;
+            }
+
+            .login-right {
+                padding: 20px;
+            }
+
+            .login-right form {
+                max-width: 100%;
+            }
+
+            .login-right h1 {
+                font-size: 2em;
+            }
+
+            .form-group input {
+                padding: 12px;
+                font-size: 16px;
+            }
+
+            .login-button {
+                padding: 12px;
             }
         }
 
-        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+                padding-top: 70px;
+            }
+
+            .navbar {
+                padding: 8px 15px;
+            }
+
+            .navbar a {
+                font-size: 1.3em;
+            }
+
+            .login-right {
+                padding: 15px;
+            }
+
+            .login-right h1 {
+                font-size: 1.8em;
+            }
+
+            .login-right p {
+                font-size: 0.9em;
+            }
+        }
     </style>
 </head>
 <body>
@@ -197,7 +264,6 @@
 
         <!-- Bagian Kanan -->
         <div class="login-right">
-
             <!-- Form Login -->
             <form action="<?php base_url('loginProses')?>" method="POST">
                 <h1>Login</h1>

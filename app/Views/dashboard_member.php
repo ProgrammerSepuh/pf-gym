@@ -385,6 +385,96 @@
         background-color: #45a049;
     }
 
+    /* Add these media queries at the end of your existing CSS */
+
+    @media screen and (max-width: 768px) {
+        /* Hide sidebar on mobile */
+        .sidebar {
+            display: none;
+        }
+
+        /* Adjust content margin for mobile */
+        .content {
+            margin-left: 0;
+            padding: 15px;
+            margin-top: 70px;
+        }
+
+        /* Adjust profile box padding */
+        .content .profile-box {
+            padding: 20px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        /* Make status container stack vertically */
+        .status-container {
+            flex-direction: column;
+        }
+
+        .status-box {
+            margin: 10px 0;
+        }
+
+        /* Adjust profile forms for mobile */
+        .profile-forms > div {
+            flex-direction: column !important;
+            gap: 10px !important;
+        }
+
+        /* Adjust navbar for mobile */
+        .navbar {
+            padding: 10px 15px;
+        }
+
+        .navbar .brand-title {
+            font-size: 1.5em;
+        }
+
+        .navbar .user-button {
+            padding: 5px 10px;
+        }
+
+        .navbar .user-button .username {
+            display: none;
+        }
+
+        /* Adjust modal content for mobile */
+        .modal-content {
+            width: 95%;
+            margin: 20px auto;
+        }
+
+        /* Adjust profile details layout */
+        .profile-box .profile-header .profile-details {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .profile-box .profile-header .profile-details .profile-photo {
+            margin: 0 auto;
+        }
+
+        .edit-btn {
+            margin: 10px auto 0;
+        }
+    }
+
+    /* Additional adjustments for very small screens */
+    @media screen and (max-width: 480px) {
+        .navbar .brand-title {
+            font-size: 1.2em;
+        }
+
+        .content h1 {
+            font-size: 1.2em;
+        }
+
+        .status-active-box {
+            width: 100%;
+        }
+    }
+
     </style>
 </head>
 <body>
