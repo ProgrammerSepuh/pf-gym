@@ -18,6 +18,9 @@
     <!-- Library Tambahan -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
+    <!-- Icon Website -->
+    <link rel="icon" href="<?php echo base_url('assets/Logo_PF-Gym.png')?>" />
+
     <!-- Library Icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
