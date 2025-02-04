@@ -539,11 +539,13 @@
                             <label for="">Agama</label>
                                 <select id="cars" name="agama">
                                     <option value="islam">islam</option>
+                                    <option value="Kristen">Kristen</option>
                                     <option value="Kristen Protestan">Kristen Protestan</option>
                                     <option value="Kristen Katolik">Kristen Katolik</option>
                                     <option value="Hindu">Hindu</option>
                                     <option value="Buddha">Buddha</option>
                                     <option value="Konghucu">Konghucu</option>
+                                    <option value="Tidak Disebutkan">Tidak Disebutkan</option>
                                 </select>
                             </div>
                         </div>

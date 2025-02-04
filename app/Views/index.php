@@ -32,13 +32,13 @@
         }
 
         .judul-overlay {
-            position: absolute;
+            position: absolute; /* Overlay harus berada di atas konten */
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6); /* Overlay hitam transparan */
+            z-index: 1; /* Pastikan overlay di bawah konten lain */
         }
 
         .judul-text {
@@ -430,144 +430,174 @@
         }
 
         @media (max-width: 768px) {
-    .service-content {
-        flex-direction: column;
-        padding: 20px 5%;
+        .service-content {
+            flex-direction: column;
+            padding: 20px 5%;
+        }
+
+        .service-left {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .service-right {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .service-left p {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: 4.5em;
+            position: relative;
+        }
+
+        .service-left p::after {
+            content: "...";
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            padding-left: 40px;
+            background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.85) 50%);
+        }
+
+        .service {
+            min-height: 100vh;
+            height: auto;
+        }
+
+        .service-right::before,
+        .service-right::after {
+            display: none;
+        }
+
+        .service-left h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .service-right img {
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+        }
     }
 
-    .service-left {
-        width: 100%;
-        text-align: center;
-        margin-bottom: 30px;
-    }
+        @media (max-width: 480px) {
+            .service-left h2 {
+                font-size: 2em;
+            }
 
-    .service-right {
-        width: 100%;
-        margin-top: 20px;
-    }
+            .service-left p {
+                font-size: 0.9em;
+                -webkit-line-clamp: 4;
+                max-height: 6em;
+            }
+        }
 
-    .service-left p {
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-height: 4.5em;
-        position: relative;
-    }
+        @media (max-width: 768px) {
+            .judul {
+                padding: 100px 5% 50px;
+                min-height: 100vh;
+                height: auto;
+            }
 
-    .service-left p::after {
-        content: "...";
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        padding-left: 40px;
-        background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.85) 50%);
-    }
+            .judul-text {
+                padding-top: 40px;
+            }
 
-    .service {
-        min-height: 100vh;
-        height: auto;
-    }
+            .judul-text h2 {
+                font-size: 2.5em;
+            }
 
-    .service-right::before,
-    .service-right::after {
-        display: none;
-    }
+            .judul-text h1 {
+                font-size: 3.5em;
+            }
 
-    .service-left h2 {
-        font-size: 2.5em;
-        margin-bottom: 15px;
-    }
+            .judul-subtext {
+                font-size: 1.5em;
+            }
 
-    .service-right img {
-        max-width: 100%;
-        height: auto;
-        margin: 0 auto;
-        display: block;
-    }
-}
+            /* Ensure proper spacing from top with fixed navbar if present */
+            body {
+                padding-top: env(safe-area-inset-top, 0px);
+            }
+        }
 
-@media (max-width: 480px) {
-    .service-left h2 {
-        font-size: 2em;
-    }
+        @media (max-width: 480px) {
+            .judul {
+                padding: 80px 5% 40px;
+            }
+            
+            .judul-text {
+                padding-top: 30px;
+            }
 
-    .service-left p {
-        font-size: 0.9em;
-        -webkit-line-clamp: 4;
-        max-height: 6em;
-    }
-}
+            .judul-text h2 {
+                font-size: 2em;
+            }
 
-@media (max-width: 768px) {
-    .judul {
-        padding: 100px 5% 50px;
-        min-height: 100vh;
-        height: auto;
-    }
+            .judul-text h1 {
+                font-size: 3em;
+            }
 
-    .judul-text {
-        padding-top: 40px;
-    }
+            .judul-subtext {
+                font-size: 1.2em;
+            }
+        }
 
-    .judul-text h2 {
-        font-size: 2.5em;
-    }
+        .judul-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            position: relative; 
+            z-index: 2; 
+            padding-left: 10em;
+        }
 
-    .judul-text h1 {
-        font-size: 3.5em;
-    }
+        .logo-img {
+            max-width: 50em; 
+            height: auto;
+            padding: 5px;
+            box-sizing: border-box;
+            z-index: 3; 
+        }
 
-    .judul-subtext {
-        font-size: 1.5em;
-    }
+        @media (max-width: 768px) {
+            .logo-img {
+                padding-right: 10em;
+                max-width: 40em; 
+            }
+        }
 
-    /* Ensure proper spacing from top with fixed navbar if present */
-    body {
-        padding-top: env(safe-area-inset-top, 0px);
-    }
-}
-
-@media (max-width: 480px) {
-    .judul {
-        padding: 80px 5% 40px;
-    }
-    
-    .judul-text {
-        padding-top: 30px;
-    }
-
-    .judul-text h2 {
-        font-size: 2em;
-    }
-
-    .judul-text h1 {
-        font-size: 3em;
-    }
-
-    .judul-subtext {
-        font-size: 1.2em;
-    }
-}
 
     </style>
 </head>
 <body>
 
 <div class="judul" id="home">
-    <div class="judul-overlay"></div>
-    <div class="judul-text">
-        <h2>PF GYM & FITNESS</h2>
-        <h1>BE STRONG</h1>
-        <p class="judul-subtext">READY TO TRAIN YOUR BODY</p>
-        
-        <a href="<?php echo base_url("auth")?>">
-            <button class="join-button">LET'S JOIN US</button>
-        </a>
-        
-    </div>
+   <div class="judul-overlay"></div>
+   <div class="judul-text">
+      <h2>PF GYM & FITNESS</h2>
+      <h1>BE STRONG</h1>
+      <p class="judul-subtext">READY TO TRAIN YOUR BODY</p>
+      
+      <a href="<?php echo base_url("auth")?>">
+         <button class="join-button">LET'S JOIN US</button>
+      </a>
+   </div>
+   <!-- Gambar Logo di sebelah kanan -->
+   <div class="judul-logo">
+      <img src="<?php echo base_url('assets/logos-2.png'); ?>" alt="Logo" class="logo-img">
+   </div>
 </div>
+
 
 <!-- DIV ABOUT -->
 <div class="about" id="about">
@@ -622,7 +652,7 @@
                 PENGALAMAN
             </h2>
             <p>
-                Siap jadi versi terbaik dari dirimu? Di Physical Fitness, kami hadir untuk kamu yang ingin sehat tanpa ribet 
+                Siap jadi versi terbaik dari dirimu? Di PF Gym & Fitness, kami hadir untuk kamu yang ingin sehat tanpa ribet 
                 dan mahal! Dengan fasilitas lengkap seperti gym yang bersih dan nyaman, pelatih bersertifikat, body 
                 measurement GRATIS, hingga buku panduan dan kartu tantangan seru, semua ada di sini. Gak cuma itu, 
                 ada juga Coaching Clinic gratis buat bantu kamu mencapai tujuan fitness kamu. Dengan harga yang ramah 
@@ -645,8 +675,8 @@
         <!-- Card 1 -->
         <?php foreach($membership as $m): ?>
             <div class="membership-card">
-                <h3><?= $m['durasi'] ?> Days</h3>
-                <p><?= $m['jenis_membership']?></p>
+                <p style="font-size: 2.5em; color:white"><?= $m['jenis_membership']?></p>
+                <h3 style="color: #FF0000;"><?= $m['durasi'] ?> Days</h3>
                 <ul>
                     <?php $fasilitas = explode(',', $m['fasilitas'])?>
                     <?php foreach($fasilitas as $f):?>

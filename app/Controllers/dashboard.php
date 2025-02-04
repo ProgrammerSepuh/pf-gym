@@ -91,28 +91,26 @@ class dashboard extends BaseController
         return view('admin', $data);
     }
     
-
     public function formAdd()
     {
         if ($this->request->getMethod() === 'post') {
-            // Ambil data dari request
             $data = [
-                'durasi' => $this->request->getPost('durasi'),
-                'jenis_membership' => $this->request->getPost('jenis_membership'),
-                'fasilitas' => $this->request->getPost('fasilitas'),
-                'harga' => $this->request->getPost('harga'),
+                'jenis_membership'  => $this->request->getPost('jenis_membership'), 
+                'harga'             => $this->request->getPost('harga'),
+                'durasi'            => $this->request->getPost('durasi'),
+                'fasilitas'         => $this->request->getPost('fasilitas'),
+                'tipe_member'       => $this->request->getPost('tipe_member'), 
             ];
     
-            // Simpan data ke database menggunakan model
             $this->membershipModel->save($data);
     
-            // Redirect dengan notifikasi sukses
             session()->setFlashdata('alert', 'Membership berhasil ditambahkan!');
             return redirect()->to('/admin#manage-member');
         }
     
         return view('form/membershipForm');
     }
+    
 
     public function save()
     {
@@ -178,9 +176,35 @@ class dashboard extends BaseController
             session()->setFlashdata('error', 'Member Tidak Aktif, Tidak dapat melakukan Check in');
             return redirect()->to('/admin');
         }
-        
+    
+        // Cek apakah tipe_member adalah 'visit'
+        if (isset($member['tipe_member']) && $member['tipe_member'] === 'visit') {
+            // Update status member menjadi 'inactive' dan set tanggal_akhir menjadi tanggal sekarang
+            $this->memberModel->update($id_member, [
+                'status' => 'inactive',
+                'tanggal_akhir' => date('Y-m-d') // Set tanggal_akhir ke tanggal sekarang
+            ]);
+        }
+
+        // Cek apakah sisa_hari = 1
+        if ($member['sisa_hari'] === 1) {
+            // Gunakan query builder untuk update status dan tanggal_akhir
+            $this->db->table('member')
+                ->set('status', 'inactive')
+                ->set('tanggal_akhir', date('Y-m-d')) // Set tanggal_akhir ke tanggal sekarang
+                ->where('id_member', $id_member)
+                ->update();
+        }
+
+        // Cek apakah tipe_member adalah 'visit'
+        if (isset($member['tipe_member']) && $member['tipe_member'] === 'visit') {
+            // Update status member menjadi 'inactive' dan set tanggal_akhir menjadi tanggal sekarang
+            $this->memberModel->updateStatusAndTanggalAkhir($id_member, 'inactive', date('Y-m-d'));
+        }
+
+    
         // Membuat instance model kehadiran
-        $kehadiranModel = new \App\Models\kehadiranModel();
+        $kehadiranModel = new \App\Models\KeahadiranModel();
         
         // Data yang akan disimpan
         $data = [
@@ -188,12 +212,16 @@ class dashboard extends BaseController
             'tanggal_datang'   => date('Y-m-d 00:00:00'), 
             'waktu'            => date('H:i:s'),           
         ];
-
+    
+        // Insert data ke tabel kehadiran
         $kehadiranModel->insert($data);
+    
+        // Sukses check-in
         session()->setFlashdata('success', 'Member ' . $member['nama_member'] . ' berhasil check in hari ini');
-
         return redirect()->to('/admin');
     }
+    
+    
     
     // ZAKI
     public function member_membership($id){
@@ -256,7 +284,7 @@ class dashboard extends BaseController
         }
 
         return redirect()->to('data-member');
-    }
+        }
 
         // Halaman Data Member // ZHAXI
         public function dataMember()
@@ -268,6 +296,7 @@ class dashboard extends BaseController
     
             return view('data-member', $data);
         }
+
         public function formMember(){
             $member = $this->membershipModel->findAll();
             $data = [
@@ -301,6 +330,29 @@ class dashboard extends BaseController
             ]);
 
             return redirect()->to('data-member');
+        }
+
+        // Hapus Data Member
+        public function hapusMember($id_member)
+        {
+            $memberModel = new \App\Models\MemberModel();
+            $kehadiranModel = new \App\Models\KehadiranModel();
+            $riwayatModel = new \App\Models\RiwayatModel();
+        
+            // Cek apakah member ada
+            $member = $memberModel->find($id_member);
+            if (!$member) {
+                return redirect()->to('/data-member')->with('error', 'Member tidak ditemukan!');
+            }
+        
+            // Hapus data terkait di tabel kehadiran dan riwayat
+            $kehadiranModel->where('id_member', $id_member)->delete();
+            $riwayatModel->where('id_member', $id_member)->delete();
+        
+            // Hapus data member setelah data terkait dihapus
+            $memberModel->delete($id_member);
+        
+            return redirect()->to('/data-member')->with('success', 'Member berhasil dihapus!');
         }
 
         public function exportCsv($config = [])
@@ -411,7 +463,6 @@ class dashboard extends BaseController
             }
             return $value;
         }
-               
-
 
 }
+

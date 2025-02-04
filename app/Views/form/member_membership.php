@@ -488,29 +488,26 @@
 
     <!-- Main Content -->
     <div class="content">
-
         <div class="member-info-section">
             <h3 style="font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 2em; color: black;"><?= $user ?></h3>
             <div class="membership-cards">
-                    <!-- Card 1 -->
-                    <form action="<?= base_url('dashboard/membership/save_tambah_membership')?>" method="post">
-                        <div class="card-box">
+                <!-- Card 1 -->
+                <form action="<?= base_url('dashboard/membership/save_tambah_membership')?>" method="post">
+                    <div class="card-box">
+                        <div class="box">
+                            <input type="hidden" name="id_user" value="<?= $id ?>">
+                            <label for="">Pilih Membership</label>
                             <div class="box">
-                                <input type="hidden" name="id_user" value="<?= $id ?>">
-                                <label for="">Pilih Membership</label>
-                                <div class="box">
-                                    <select name="id_membership" id="">
-                                        <?php foreach($membership as $m): ?>
-                                        <option value="<?= $m['id_membership']?>"><?= $m['jenis_membership']?></option>
-                                        <?php endforeach ?>
-                                    </select>
-                                    <br>
-                                    <button>Tambahkan</button>
-                                </div>
-
+                                <select name="id_membership" id="">
+                                    <?php foreach($membership as $m): ?>
+                                    <option value="<?= $m['id_membership']?>"><?= $m['jenis_membership']?></option>
+                                    <?php endforeach ?>
+                                </select>
+                                <br>
+                                <button>Tambahkan</button>
                             </div>
-
-                     </form>
+                        </div>
+                 </form>
             </div>
         </div>
     </div>

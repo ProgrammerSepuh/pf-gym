@@ -4,13 +4,9 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class riwayatModel extends Model
+class RiwayatModel extends Model
 {
-    protected $table      = 'riwayat';
+    protected $table = 'riwayat';
     protected $primaryKey = 'id_riwayat';
-
-    protected $allowedFields = [
-        'id_member', 'id_membership'
-    ];
-
+    protected $allowedFields = ['id_member', 'deskripsi', 'tanggal', 'id_membership'];
 }

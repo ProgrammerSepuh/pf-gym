@@ -234,7 +234,7 @@
         }
 
         .member-info-table th:not(:nth-child(1)):not(:nth-last-child(1)) {
-            text-align: left;
+            text-align: center;
         }
 
         .member-info-table td {
@@ -284,15 +284,28 @@
         }
         
         .status-badge.active {
-            background-color: #28a745; /* Green for active */
+            background-color: #28a745; 
             color: white;
         }
         
         .status-badge.inactive {
-            background-color: #dc3545; /* Red for inactive */
+            background-color: #dc3545; 
             color: white;
         }
         
+        .status-badge-hapus {
+            background-color: #dc3545;
+            color: white;
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+            width: 100px;
+            text-align: center;
+        }
+
         /* Alert Styles */
         .alert {
             position: relative;

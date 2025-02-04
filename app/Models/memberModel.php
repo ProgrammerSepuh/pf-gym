@@ -10,8 +10,8 @@ class memberModel extends Model
     protected $primaryKey = 'id_member';
 
     protected $allowedFields = [
-    'nama_member', 'email', 'nomor_hp', 'password' , 'alamat', 'agama', 'jenis_kelamin', 'status', 'tanggal_akhir'
-    ];
+        'nama_member', 'email', 'nomor_hp', 'password', 'alamat', 'agama', 'jenis_kelamin', 'status', 'tanggal_akhir', 'tipe_member'
+    ];    
 
     public function getMemberWithSisaHari($id_member)
     {
@@ -33,4 +33,5 @@ class memberModel extends Model
 
         return $member;
     }
+    
 }

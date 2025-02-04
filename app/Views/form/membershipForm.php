@@ -426,6 +426,19 @@
             outline: none;
             border: 1px solid black;
         }
+        .box select {
+            width: 350px;
+            height: 40px;
+            border:none;
+            background-color: #E2E7E7;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #7E7E7E;
+        }
+        .box select:focus {
+            outline: none;
+            border: 1px solid black;
+        }
         form {
             background-color: #FFFFFF;
             padding: 20px;
@@ -514,6 +527,15 @@
                                 <label for="namaMembership">Fasilitas membership </label>
                                 <input type="text" name="fasilitas" id="namaMembership" placeholder="Masukan fasilitas">
                                 <sub style="color: #7E7E7E;">Masukan fasilitas yang dipisahkan koma</sub>
+                            </div>
+                        </div>
+                        <div class="card-box">
+                            <div class="box">
+                            <label for="tipe_member">Tipe Membership</label>
+                                <select name="tipe_member" id="tipe_member" required>
+                                    <option value="member">Member</option>
+                                    <option value="visit">Visit</option>
+                                </select>
                             </div>
                         </div>
                         <button>Tambahkan</button>

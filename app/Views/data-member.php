@@ -74,7 +74,7 @@
             <h3 style="font-family: 'Poppins', sans-serif; font-weight: 100; font-size: 1em; color: black;">Informasi Member</h3>
 
             <div class="member-info-section">
-                <div class="box" style="widht:100%;">
+                <div class="box" style="width:100%;">
                     <a href="<?= base_url('dashboard/membership/memberAdd')?>" style="background-color: #5CB338; float: right; padding: 10px 20px; margin: 0px 0px 20px 0px; border-radius:5px; text-decoration:none; color:#ffffff">Tambahkan Member</a>
                 </div>
                 <table class="member-info-table">
@@ -86,9 +86,10 @@
                             <th>Alamat</th>
                             <th>Jenis Kelamin</th>
                             <th>Agama</th>
-                            <th>Phone Number</th>
+                            <th>Nomor Hp</th>
                             <th>Tanggal Habis</th>
                             <th>Status</th>
+                            <th>Hapus</th>
 
                         </tr>
                     </thead>
@@ -104,7 +105,13 @@
                                 <td><?= $m['agama']?></td>
                                 <td><?= $m['nomor_hp']?></td>
                                 <td><?= $m['tanggal_akhir']?></td>
-                                <td><a href="<?= base_url('/dashboard/membership/membershipForm/'.$m['id_member'])?>"><span class="status-badge <?= strtolower($m['status']) ?>" <?= $m['status']?>"><?= $m['status']?></span></a></td>
+                                <td><a href="<?= base_url('/dashboard/membership/membershipForm/'.$m['id_member'])?>"><span class="status-badge <?= strtolower($m['status']) ?>" <?= $m['status']?>><?= $m['status']?></span></a></td>
+                                <td>
+                                    <a href="<?= base_url('/dashboard/membership/hapusMember/'.$m['id_member']) ?>" 
+                                    onclick="return confirm('Are you sure you want to delete this member?')">
+                                        <span class="status-badge-hapus">Hapus</span>
+                                    </a>
+                                </td>
                             </tr>
                             <?php  $i++ ?>
                         <?php endforeach ?>

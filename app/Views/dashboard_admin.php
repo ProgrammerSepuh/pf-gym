@@ -527,17 +527,44 @@
         .join-button:hover {
             background-color: #d10000;
         }
+
+        .btn-export {
+            background-color: #28a745; /* Warna hijau */
+            color: white; /* Warna teks putih */
+            font-size: 16px; /* Ukuran font */
+            padding: 10px 20px; /* Padding untuk membuat tombol lebih besar */
+            border: none; /* Menghilangkan border default */
+            border-radius: 5px; /* Membuat sudut tombol menjadi lebih lembut */
+            cursor: pointer; /* Menambahkan pointer saat hover */
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Efek transisi saat hover */
+        }
+
+        .btn-export:hover {
+            background-color: #218838; /* Warna hijau lebih gelap saat hover */
+            transform: scale(1.05); /* Sedikit membesarkan tombol saat hover */
+        }
+
+        .btn-export:active {
+            background-color: #1e7e34; /* Warna hijau lebih gelap saat ditekan */
+            transform: scale(1); /* Mengembalikan ukuran tombol saat ditekan */
+        }
+
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <div class="navbar">
-        <div class="brand-title">PF <span style="color: red;">GYM</span> & FITNESS</div>
-        <!-- Link Navigation Buttonx -->
-        <a href="<?php echo base_url("profile")?>" class="user-button">
-            <span class="username">ADMIN</span>
-            <div class="profile-icon"><i class="fas fa-user"></i></div>
+        <div class="brand-title">
+        <a href="<?php echo base_url("/")?>" style="color: black; text-decoration: none;">
+            PF <span style="color: red;">GYM</span> & FITNESS
         </a>
+        
+        </div>
+        <!-- Link Navigation Buttonx -->
+        <div class="user-button">
+            <span class="username">ADMIN | PF Gym & Fitness</span>
+            <div class="profile-icon"><i class="fas fa-user"></i></div>
+        </div>
     </div>
 
     <!-- Sidebar -->
@@ -663,8 +690,8 @@
                 <div class="member-info-section">
                     <div class="membership-cards">
                         <?php foreach($membership as $m): ?>
-                            <div class="card-box" style="display: flex; flex-direction: column; align-items:center; gap:10px;">
-                                <div class="membership-card">
+                            <div class="card-box" style="display: flex; flex-direction: column; align-items:center; gap:10px;" >
+                                <div class="membership-card" style="margin-bottom: 1.5em; padding-top: 2.5em;">
                                     <h3><?=$m['durasi']?> Days</h3>
                                     <p><?=$m['jenis_membership']?></p>
                                     <?php $fasilitas = explode(',', $m['fasilitas']);?>
@@ -755,7 +782,7 @@
     <h2 style="font-family: 'Poppins', sans-serif; font-weight: 300; font-size: 1.5em; color: black;">Report Member</h2>
 
     <!-- Button Export -->
-    <form action="<?= base_url('dashboard/exportCsv') ?>" method="post" style="margin-bottom: 20px;">
+    <form action="<?= base_url('dashboard/exportCsv') ?>" method="post" style="margin-bottom: 20px; padding-top: 10px">
         <button type="submit" class="btn-export">Export</button>
     </form>
 

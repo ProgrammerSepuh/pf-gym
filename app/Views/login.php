@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Icon Website -->
+    <link rel="icon" href="<?php echo base_url('assets/Logo_PF-Gym.png')?>" />
+    
     <style>
         * {
             margin: 0;

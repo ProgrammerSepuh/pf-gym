@@ -385,6 +385,37 @@
         background-color: #45a049;
     }
 
+    /* Box untuk logout button */
+    .logout-box {
+        background-color: white;
+        padding: 50px;
+        padding-left: 150px;
+        padding-right: 150px;
+        border-radius: 10px;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        margin-top: 30px;
+    }
+
+    /* Styling logout button */
+    .mobile-logout-button {
+        font-size: 1.2em;
+        font-weight: 600;
+        color: #d9534f;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: color 0.3s;
+    }
+
+    .mobile-logout-button i {
+        font-size: 1.5em;
+    }
+
+    .mobile-logout-button:hover {
+        color: #c9302c;
+    }
+
     /* Add these media queries at the end of your existing CSS */
 
     @media screen and (max-width: 768px) {
@@ -472,6 +503,12 @@
 
         .status-active-box {
             width: 100%;
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        .logout-box {
+            display: none;
         }
     }
 
@@ -617,6 +654,14 @@
                 </div>
             </div>
         </div>
+
+        <div class="profile-box logout-box">
+            <a href="<?= base_url('/logout'); ?>" class="logout-button">
+            <div class="icon-circle"><i class="fas fa-arrow-left"></i></div>
+            Logout
+        </a>
+        </div>
+
     </div>
 </body>
 

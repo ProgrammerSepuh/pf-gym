@@ -47,3 +47,5 @@ $routes->post('/dashboard/membership/save_tambah_membership', 'dashboard::tambah
 
 $routes->post('dashboard/exportCsv', 'Dashboard::exportCsv');
 $routes->post('dashboard/exportCsv', 'Dashboard::exportCsv');
+
+$routes->get('/dashboard/membership/hapusMember/(:num)', 'Dashboard::hapusMember/$1');
